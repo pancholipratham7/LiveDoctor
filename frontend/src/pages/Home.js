@@ -7,6 +7,9 @@ import Star from "@material-ui/icons/Star";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getDoctorsList } from "../store/doctorsListSlice";
+import { Link } from "react-router-dom";
+import Loader from "../components/Loader";
+import Error from "../components/Error";
 
 const Home = () => {
   // Hooks
@@ -15,7 +18,6 @@ const Home = () => {
 
   // doctors list state
   const { doctors, loading, error } = useSelector((state) => state.doctorsList);
-  console.log(doctors);
 
   useEffect(() => {
     // Only request for the doctors list if doctors are not present
@@ -40,176 +42,50 @@ const Home = () => {
       </div>
       <div className={classes["middle-container"]}>
         <span className={classes["team-name"]}>LiveDoctor Team</span>
-        <div className={classes["doctors-container"]}>
-          <div className={classes["doctor-card"]}>
-            <div className={classes["doctor-card-img"]}>
-              <img src="./doctor1.png" alt="" />
-            </div>
-            <div className={classes["card-details"]}>
-              <div className={classes.one}>
-                <div>
-                  <SchoolIcon />
-                  <span>MBBS,MD</span>
+        {loading && <Loader />}
+        {error && <Error variant="danger" errorMsg={error} />}
+        {doctors && (
+          <div className={classes["doctors-container"]}>
+            {doctors.map((doctor) => (
+              <div key={doctor._id} className={classes["doctor-card"]}>
+                <div className={classes["doctor-card-img"]}>
+                  <img src={doctor.image} alt="" />
                 </div>
-                <div>
-                  <Profession />
-                  <span>Dermatologist</span>
+                <span
+                  className={classes["doctor-name"]}
+                >{`${doctor.firstName} ${doctor.lastName}`}</span>
+                <div className={classes["card-details"]}>
+                  <div className={classes.one}>
+                    <div>
+                      <SchoolIcon />
+                      <span>{doctor.education}</span>
+                    </div>
+                    <div>
+                      <Profession />
+                      <span>{doctor.speciality}</span>
+                    </div>
+                  </div>
+                  <div className={classes.two}>
+                    <div>
+                      <Fees />
+                      <span>Rs {doctor.fees}</span>
+                    </div>
+                    <div>
+                      <Star />
+                      <span>{doctor.rating}</span>
+                    </div>
+                  </div>
                 </div>
+                <Link
+                  className={classes["details-btn-link"]}
+                  to={`/doctor/${doctor._id}`}
+                >
+                  <button className={classes["details-btn"]}>Details</button>
+                </Link>
               </div>
-              <div className={classes.two}>
-                <div>
-                  <Fees />
-                  <span>Rs 500</span>
-                </div>
-                <div>
-                  <Star />
-                  <span>3.5</span>
-                </div>
-              </div>
-            </div>
-            <button className={classes["details-btn"]}>Details</button>
+            ))}
           </div>
-          <div className={classes["doctor-card"]}>
-            <div className={classes["doctor-card-img"]}>
-              <img src="./doctor2.png" alt="" />
-            </div>
-            <div className={classes["card-details"]}>
-              <div className={classes.one}>
-                <div>
-                  <SchoolIcon />
-                  <span>MBBS,MD</span>
-                </div>
-                <div>
-                  <Profession />
-                  <span>Dermatologist</span>
-                </div>
-              </div>
-              <div className={classes.two}>
-                <div>
-                  <Fees />
-                  <span>Rs 500</span>
-                </div>
-                <div>
-                  <Star />
-                  <span>3.5</span>
-                </div>
-              </div>
-            </div>
-            <button className={classes["details-btn"]}>Details</button>
-          </div>
-          <div className={classes["doctor-card"]}>
-            <div className={classes["doctor-card-img"]}>
-              <img src="./doctor3.png" alt="" />
-            </div>
-            <div className={classes["card-details"]}>
-              <div className={classes.one}>
-                <div>
-                  <SchoolIcon />
-                  <span>MBBS,MD</span>
-                </div>
-                <div>
-                  <Profession />
-                  <span>Dermatologist</span>
-                </div>
-              </div>
-              <div className={classes.two}>
-                <div>
-                  <Fees />
-                  <span>Rs 500</span>
-                </div>
-                <div>
-                  <Star />
-                  <span>3.5</span>
-                </div>
-              </div>
-            </div>
-            <button className={classes["details-btn"]}>Details</button>
-          </div>
-          <div className={classes["doctor-card"]}>
-            <div className={classes["doctor-card-img"]}>
-              <img src="./doctor4.png" alt="" />
-            </div>
-            <div className={classes["card-details"]}>
-              <div className={classes.one}>
-                <div>
-                  <SchoolIcon />
-                  <span>MBBS,MD</span>
-                </div>
-                <div>
-                  <Profession />
-                  <span>Dermatologist</span>
-                </div>
-              </div>
-              <div className={classes.two}>
-                <div>
-                  <Fees />
-                  <span>Rs 500</span>
-                </div>
-                <div>
-                  <Star />
-                  <span>3.5</span>
-                </div>
-              </div>
-            </div>
-            <button className={classes["details-btn"]}>Details</button>
-          </div>
-          <div className={classes["doctor-card"]}>
-            <div className={classes["doctor-card-img"]}>
-              <img src="./doctor5.png" alt="" />
-            </div>
-            <div className={classes["card-details"]}>
-              <div className={classes.one}>
-                <div>
-                  <SchoolIcon />
-                  <span>MBBS,MD</span>
-                </div>
-                <div>
-                  <Profession />
-                  <span>Dermatologist</span>
-                </div>
-              </div>
-              <div className={classes.two}>
-                <div>
-                  <Fees />
-                  <span>Rs 500</span>
-                </div>
-                <div>
-                  <Star />
-                  <span>3.5</span>
-                </div>
-              </div>
-            </div>
-            <button className={classes["details-btn"]}>Details</button>
-          </div>
-          <div className={classes["doctor-card"]}>
-            <div className={classes["doctor-card-img"]}>
-              <img src="./doctor6.png" alt="" />
-            </div>
-            <div className={classes["card-details"]}>
-              <div className={classes.one}>
-                <div>
-                  <SchoolIcon />
-                  <span>MBBS,MD</span>
-                </div>
-                <div>
-                  <Profession />
-                  <span>Dermatologist</span>
-                </div>
-              </div>
-              <div className={classes.two}>
-                <div>
-                  <Fees />
-                  <span>Rs 500</span>
-                </div>
-                <div>
-                  <Star />
-                  <span>3.5</span>
-                </div>
-              </div>
-            </div>
-            <button className={classes["details-btn"]}>Details</button>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

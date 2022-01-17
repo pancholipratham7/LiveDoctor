@@ -20,6 +20,11 @@ const doctorsListSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    doctorsListReset(state, action) {
+      state.loading = false;
+      state.doctors = [];
+      state.error = "";
+    },
   },
 });
 
