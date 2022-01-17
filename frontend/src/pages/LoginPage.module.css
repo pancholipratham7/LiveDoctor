@@ -1,0 +1,101 @@
+.loginPageContainer {
+  width: 70%;
+  display: flex;
+  margin: auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  height: 500px;
+  margin-top: 80px;
+}
+
+.imageSection,
+.loginDetailsSection {
+  flex-basis: 50%;
+}
+
+.imageSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(255, 4, 213);
+}
+
+.imageSection img {
+  width: 95%;
+  object-fit: contain;
+  flex-basis: 80%;
+}
+
+.imageSection span {
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.1rem;
+  width: 85%;
+  margin-top: 0.6rem;
+  align-self: center;
+  flex-basis: 20%;
+}
+
+.loginDetailsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.loginDetailsSection form {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 70%;
+  width: 70%;
+}
+
+.loginDetailsSection form label {
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 20px;
+}
+
+.form-title {
+  font-size: 3rem;
+  color: black;
+  font-family: "Roboto", sans-serif;
+  margin-top: 3rem;
+  flex-basis: 20%;
+}
+
+.inputs {
+  display: block;
+  width: 100%;
+  padding: 15px 15px;
+  margin-top: 0.3rem;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border-radius: 20px;
+}
+
+.inputs:focus {
+  background-color: white;
+  border: 1px solid black;
+}
+
+.loginBtn {
+  padding: 10px 5px;
+  color: white;
+  background-color: rgb(0, 0, 0);
+  border-radius: 0.58rem;
+  font-size: 1rem;
+  width: 60%;
+  align-self: center;
+  border: none;
+  margin-top: 1.17rem;
+}
+
+.signIn {
+  font-family: "Roboto", sans-serif;
+  margin-top: 2rem;
+  align-self: center;
+  font-size: 1rem;
+}

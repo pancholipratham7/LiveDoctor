@@ -1,7 +1,7 @@
 .mainContainer {
   display: flex;
   flex-direction: column;
-  width: 95%;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -9,7 +9,7 @@
   display: flex;
   justify-content: space-around;
   box-shadow: 0 3px 10px rgb(141, 139, 139);
-  padding-top: 20px;
+  padding-top: 30px;
   background-color: rgb(255, 1, 213);
 }
 
@@ -116,11 +116,11 @@
 
 .details-btn {
   width: 80%;
-  padding: 10px;
+  padding: 15px 10px;
   background-color: rgb(0, 0, 0);
   color: white;
   margin: auto;
-  margin-bottom: 10px;
+  margin-bottom: 1.8rem;
   font-size: 1rem;
   border-radius: 10px;
   border: none;
@@ -129,6 +129,7 @@
 
 .doctor-card-img {
   width: 87%;
+  height: 11.7rem;
   margin: auto;
   margin-top: 20px;
   background-color: rgba(255, 254, 255, 0.849);
@@ -139,4 +140,5 @@
 .doctor-card-img img {
   height: 100%;
   width: 100%;
+  object-fit: contain;
 }

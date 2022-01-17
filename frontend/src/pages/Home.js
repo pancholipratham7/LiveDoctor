@@ -25,7 +25,7 @@ const Home = () => {
         <div className={classes["doctors-container"]}>
           <div className={classes["doctor-card"]}>
             <div className={classes["doctor-card-img"]}>
-              <img src="./doctor-card.png" alt="" />
+              <img src="./doctor1.png" alt="" />
             </div>
             <div className={classes["card-details"]}>
               <div className={classes.one}>
@@ -53,7 +53,7 @@ const Home = () => {
           </div>
           <div className={classes["doctor-card"]}>
             <div className={classes["doctor-card-img"]}>
-              <img src="./doctor-card.png" alt="" />
+              <img src="./doctor2.png" alt="" />
             </div>
             <div className={classes["card-details"]}>
               <div className={classes.one}>
@@ -81,7 +81,7 @@ const Home = () => {
           </div>
           <div className={classes["doctor-card"]}>
             <div className={classes["doctor-card-img"]}>
-              <img src="./doctor-card.png" alt="" />
+              <img src="./doctor3.png" alt="" />
             </div>
             <div className={classes["card-details"]}>
               <div className={classes.one}>
@@ -109,7 +109,7 @@ const Home = () => {
           </div>
           <div className={classes["doctor-card"]}>
             <div className={classes["doctor-card-img"]}>
-              <img src="./doctor-card.png" alt="" />
+              <img src="./doctor4.png" alt="" />
             </div>
             <div className={classes["card-details"]}>
               <div className={classes.one}>
@@ -137,7 +137,7 @@ const Home = () => {
           </div>
           <div className={classes["doctor-card"]}>
             <div className={classes["doctor-card-img"]}>
-              <img src="./doctor-card.png" alt="" />
+              <img src="./doctor5.png" alt="" />
             </div>
             <div className={classes["card-details"]}>
               <div className={classes.one}>
@@ -165,7 +165,7 @@ const Home = () => {
           </div>
           <div className={classes["doctor-card"]}>
             <div className={classes["doctor-card-img"]}>
-              <img src="./doctor-card.png" alt="" />
+              <img src="./doctor6.png" alt="" />
             </div>
             <div className={classes["card-details"]}>
               <div className={classes.one}>
