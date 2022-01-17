@@ -32,7 +32,10 @@ const LoginPage = () => {
           </label>
           <button className={classes.loginBtn}>Login</button>
           <span className={classes["signIn"]}>
-            Don't have an account?<Link to="/signin">Sign Up</Link>
+            Don't have an account?&nbsp;
+            <Link className={classes.links} to="/signin">
+              Sign Up
+            </Link>
           </span>
         </form>
       </div>

@@ -101,3 +101,8 @@
   font-size: 1rem;
   margin-bottom: 20px;
 }
+
+.links {
+  color: blue;
+  text-decoration: none;
+}

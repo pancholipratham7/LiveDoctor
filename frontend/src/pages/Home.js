@@ -4,8 +4,26 @@ import SchoolIcon from "@material-ui/icons/School";
 import Profession from "@material-ui/icons/LocalHospital";
 import Fees from "@material-ui/icons/AttachMoney";
 import Star from "@material-ui/icons/Star";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getDoctorsList } from "../store/doctorsListSlice";
 
 const Home = () => {
+  // Hooks
+
+  const dispatch = useDispatch();
+
+  // doctors list state
+  const { doctors, loading, error } = useSelector((state) => state.doctorsList);
+  console.log(doctors);
+
+  useEffect(() => {
+    // Only request for the doctors list if doctors are not present
+    if (doctors.length === 0) {
+      dispatch(getDoctorsList());
+    }
+  }, [dispatch, doctors]);
+
   return (
     <div className={classes.mainContainer}>
       <div className={classes.topContainer}>

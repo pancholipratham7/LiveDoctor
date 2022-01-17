@@ -59,7 +59,10 @@ const SignUpPage = () => {
           </label>
           <button className={classes.signUpBtn}>Login</button>
           <span className={classes["login-link"]}>
-            Already have an account?<Link to="/login">Login</Link>
+            Already have an account?&nbsp;
+            <Link className={classes.links} to="/login">
+              Login
+            </Link>
           </span>
         </form>
       </div>
