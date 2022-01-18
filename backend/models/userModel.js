@@ -45,6 +45,11 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// method for comparing password during login time
+userSchema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
 // Doctor Model
 const User = mongoose.model("User", userSchema);
 module.exports = User;

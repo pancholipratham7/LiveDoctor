@@ -43,7 +43,7 @@ export const getDoctorsList = () => async (dispatch, getState) => {
     // updating the redux state
     dispatch(doctorsListActions.doctorsListSuccess(data));
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
     dispatch(doctorsListActions.doctorsListFailed(err.response.data.message));
   }
 };

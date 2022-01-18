@@ -38,6 +38,7 @@
 
 .nav-items span {
   letter-spacing: 0.1rem;
+  font-size: 1.1rem;
 }
 
 .selected-link {
@@ -46,4 +47,14 @@
 .nav-link {
   color: rgb(255, 1, 213);
   text-decoration: none;
+}
+
+.account-profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.account-profile span {
+  margin-left: 0.29rem;
 }

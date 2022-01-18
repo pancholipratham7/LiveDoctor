@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classes from "./SignUpPage.module.css";
-import { Link, useHistory, Redirect } from "react-router-dom";
-import Error from "../components/Error";
+import { Link, Redirect } from "react-router-dom";
+import Loader from "./../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../store/userSlice";
 
@@ -21,7 +21,7 @@ const SignUpPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   // If user is already loggedIn then redirecting to the home pagr
-  if (userLoggedInDetails) {
+  if (userLoggedInDetails && userLoggedInDetails.email) {
     return <Redirect to="/" />;
   }
 
@@ -111,7 +111,10 @@ const SignUpPage = () => {
               required
             />
           </label>
-          <button className={classes.signUpBtn}>Create a new account</button>
+          <button className={classes.signUpBtn}>
+            {loading && <Loader />}
+            {!loading && "Create a new account"}
+          </button>
           <span className={classes["login-link"]}>
             Already have an account?&nbsp;
             <Link className={classes.links} to="/login">

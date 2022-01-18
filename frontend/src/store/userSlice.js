@@ -1,8 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// user loggedin details from localStorahe
+const userLoggedIn = JSON.parse(localStorage.getItem("userLoggedIn"));
+
 // user initial state
-const userInitialState = { userLoggedInDetails: "", loading: false, error: "" };
+const userInitialState = {
+  userLoggedInDetails: userLoggedIn,
+  loading: false,
+  error: "",
+};
 
 // userSlice
 const userSlice = createSlice({
@@ -19,6 +26,22 @@ const userSlice = createSlice({
     userSignUpFailed(state, action) {
       state.loading = false;
       state.error = action.payload;
+    },
+    userLogInRequest(state, action) {
+      state.loading = true;
+    },
+    userLogInSuccess(state, action) {
+      state.loading = false;
+      state.userLoggedInDetails = action.payload;
+    },
+    userLogInFailed(state, action) {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    userLogout(state, action) {
+      state.loading = false;
+      state.error = "";
+      state.userLoggedInDetails = "";
     },
   },
 });
@@ -45,4 +68,38 @@ export const signUp = (user) => async (dispatch, getState) => {
   } catch (err) {
     dispatch(userActions.userSignUpFailed(err.response.data.message));
   }
+};
+
+// userLogin request
+
+export const loginUser = (user) => async (dispatch, getState) => {
+  try {
+    // making the loading state as true
+    dispatch(userActions.userLogInRequest());
+
+    // making a login request at the backend
+    const { data } = await axios.post(
+      "http://localhost:5000/api/users/login",
+      user
+    );
+    console.log(data);
+
+    // updating the redux state
+    dispatch(userActions.userLogInSuccess(data));
+
+    // storing the login details in the local storage
+    localStorage.setItem("userLoggedIn", JSON.stringify(data));
+  } catch (err) {
+    console.log(err.response.data.message);
+    dispatch(userActions.userLogInFailed(err.response.data.message));
+  }
+};
+
+// action creator for logging out users
+export const logoutUser = () => async (dispatch, getState) => {
+  // changing redux state
+  dispatch(userActions.userLogout());
+
+  // removing the data from the local storage
+  localStorage.removeItem("userLoggedIn");
 };

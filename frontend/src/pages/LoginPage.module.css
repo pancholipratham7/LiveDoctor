@@ -3,7 +3,7 @@
   display: flex;
   margin: auto;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  height: 500px;
+  height: 530px;
   margin-top: 80px;
 }
 
@@ -103,4 +103,11 @@
 .links {
   color: blue;
   text-decoration: none;
+}
+
+.error {
+  color: red;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  font-family: "Roboto", sans-serif;
 }

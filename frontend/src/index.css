@@ -7,3 +7,21 @@
 html {
   font-size: 17px;
 }
+
+#dropdown-basic-button {
+  background-color: white;
+  color: rgb(255, 0, 191);
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+  font-family: "Roboto", sans-serif;
+  margin-left: 0.29rem;
+}
+#dropdown-basic-button:focus {
+  border: none;
+  background-color: white;
+  box-shadow: none;
+}
