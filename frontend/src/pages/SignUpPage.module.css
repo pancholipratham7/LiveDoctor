@@ -61,7 +61,7 @@
   margin-top: 1rem;
   color: black;
   font-family: "Roboto", sans-serif;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   flex-basis: 10%;
 }
 
@@ -105,4 +105,12 @@
 .links {
   color: blue;
   text-decoration: none;
+}
+
+.error {
+  color: red;
+  font-weight: 900;
+  align-self: center;
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 1rem;
 }
