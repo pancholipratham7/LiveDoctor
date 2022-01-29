@@ -6,4 +6,7 @@ const doctorController = require("../controllers/doctorController");
 // Route for getting all doctors
 router.route("/").get(doctorController.getAllDoctors);
 
+//route for getting doctor details
+router.route("/:id/details").get(doctorController.getDoctorDetails);
+
 module.exports = router;

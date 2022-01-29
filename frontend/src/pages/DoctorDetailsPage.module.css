@@ -1,0 +1,193 @@
+.doctorDetailsPageContainer {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.top-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-card {
+  flex-basis: 25%;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  background-color: white;
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; */
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  align-items: center;
+}
+
+.profile-div {
+  width: 100%;
+  height: 150px;
+  background-color: #fc5296;
+  background: #ff00a1;
+  background: -webkit-linear-gradient(left, #ff00a1, #ff0381);
+  background: -moz-linear-gradient(left, #ff00a1, #ff0381);
+  background: linear-gradient(to right, #ff00a1, #ff0381);
+}
+
+.doctor-img-container {
+  width: 150px;
+  border: 7px solid rgb(241, 236, 236);
+  border-radius: 50%;
+  height: 150px;
+  margin-top: -70px;
+}
+
+.doctor-img-container img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.doctor-name {
+  font-weight: 800;
+  font-size: 1.2rem;
+  font-family: "Roboto", sans-serif;
+  color: rgb(19, 17, 17);
+}
+.book-app-btn {
+  width: 80%;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  font-size: 1.1rem;
+  background-color: #045de9;
+  background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
+}
+
+.details-section {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 70%;
+}
+
+.profile-card-stats {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.patients-consulted-container,
+.experience-container {
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.patients-consulted-container div,
+.experience-container div {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  color: rgb(255, 47, 193);
+}
+
+.book-app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.text {
+  font-size: 1rem;
+  font-weight: 300;
+  font-family: "Roboto", sans-serif;
+  color: grey;
+}
+
+.fees-text {
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+}
+
+.treatments-container,
+.details-container {
+  width: 100%;
+  background-color: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+  font-size: 1.3rem;
+  margin-top: 10px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  color: #ff0381;
+  letter-spacing: 0.1rem;
+}
+
+.treatments {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-bottom: 30px;
+}
+
+.treatment {
+  /* border: 1px solid black; */
+  font-size: 1.2rem;
+  display: flex;
+  flex-basis: 32%;
+  align-items: center;
+  margin-top: 30px;
+  color: rgb(141, 137, 137);
+  font-family: "Roboto", sans-serif;
+}
+
+.tick {
+  color: rgb(60, 255, 0);
+  margin-right: 10px;
+}
+
+.details-container {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.doctor-details-container {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  margin: 0 auto;
+  width: 95%;
+  padding: 20px 0px;
+}
+
+.education-container,
+.speciality-container,
+.experience-box,
+.timing-container,
+.rating-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.icons {
+  margin-right: 10px;
+  color: rgb(253, 6, 150);
+}
+
+.icon-details {
+  margin-left: 10px;
+  font-family: "Roboto", sans-serif;
+}

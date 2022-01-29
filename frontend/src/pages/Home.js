@@ -37,7 +37,7 @@ const Home = () => {
           </span>
         </div>
         <div className={classes["top-cont-img"]}>
-          <img src="./doctor-home-top-img.png" alt="" />
+          <img src="/doctor-home-top-img.png" alt="" />
         </div>
       </div>
       <div className={classes["middle-container"]}>
@@ -78,7 +78,7 @@ const Home = () => {
                 </div>
                 <Link
                   className={classes["details-btn-link"]}
-                  to={`/doctor/${doctor._id}`}
+                  to={`/${doctor._id}/details`}
                 >
                   <button className={classes["details-btn"]}>Details</button>
                 </Link>

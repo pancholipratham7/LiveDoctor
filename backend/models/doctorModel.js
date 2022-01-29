@@ -45,6 +45,20 @@ const doctorSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    treatments: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    experience: {
+      type: Number,
+      required: true,
+    },
+    patientsConsulted: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true }
 );
