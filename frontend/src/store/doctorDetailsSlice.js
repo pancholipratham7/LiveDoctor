@@ -24,6 +24,11 @@ const doctorDetailsSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    doctorDetailsReset(state, action) {
+      state.loading = false;
+      state.error = "";
+      state.doctorInfo = "";
+    },
   },
 });
 
