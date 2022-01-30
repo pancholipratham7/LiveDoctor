@@ -110,3 +110,36 @@
   font-size: 1rem;
   color: grey;
 }
+
+.modal-container {
+  width: 50%;
+  margin: 0 auto;
+  color: black;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-top: 100px;
+}
+
+.checkCircle {
+  margin-top: 20px;
+  color: greenyellow;
+  font-size: 4rem;
+}
+
+.errorIcon {
+  margin-top: 20px;
+  color: red;
+}
+
+.modal-body {
+  align-self: center;
+  width: 70%;
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.2rem;
+  font-family: "Roboto", sans-serif;
+}

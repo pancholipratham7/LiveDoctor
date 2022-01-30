@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const User = require("./../models/userModel");
 const generateToken = require("./../utils/generateToken").generateToken;
+const Appointment = require("./../models/appointmentModel");
 
 // Signing Up users
 exports.signUp = asyncHandler(async (req, res, next) => {
@@ -66,4 +67,43 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
     res.status(404);
     throw new Error("Entered Password is wrong....!");
   }
+});
+
+// book an appointment
+exports.bookAnAppointment = asyncHandler(async (req, res, next) => {
+  const { appointmentDate, slot, doctorId } = req.body;
+  const startTime = slot.split("-")[0];
+  const endTime = slot.split("-")[1];
+
+  // checking if the appointment with the same date and slot is present or not
+  const appointment = await Appointment.find({
+    doctor: doctorId,
+    appointmentDate: new Date(appointmentDate),
+    startTime,
+    endTime,
+  });
+
+  // If the appointment already exists then we need to throw a message
+  if (appointment && appointment.length !== 0) {
+    return res.status(200).json({
+      status: "Error",
+      message:
+        "Oops your appointment was not booked because the doctor is not available at alloted date and slot.Please select some other slot or date.",
+    });
+  }
+
+  // Creating an appointment
+  const newAppointment = await Appointment.create({
+    startTime,
+    endTime,
+    appointmentDate,
+    doctor: doctorId,
+    patient: req.user._id,
+  });
+
+  res.status(200).json({
+    status: "Success",
+    message:
+      "Wait for some time for the confirmation of your appointment.You will be recieving a mail on your gmail regarding the status of your appointment.",
+  });
 });
