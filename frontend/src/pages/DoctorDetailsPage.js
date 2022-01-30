@@ -10,7 +10,7 @@ import Rating from "@material-ui/icons/Grade";
 import Loader from "./../components/Loader";
 import Error from "./../components/Error";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   doctorDetailsActions,
   fetchDoctorDetails,
@@ -28,10 +28,6 @@ const DoctorDetailsPage = () => {
 
   useEffect(() => {
     dispatch(fetchDoctorDetails(params.id));
-    return () => {
-      // On unmounting we will call this to reset the redux state doctorInfo
-      dispatch(doctorDetailsActions.doctorDetailsReset());
-    };
   }, [dispatch, params]);
 
   console.log(doctorInfo);
@@ -71,9 +67,12 @@ const DoctorDetailsPage = () => {
               <span className={classes["fees-text"]}>
                 Fees : Rs {doctorInfo.fees}
               </span>
-              <button className={classes["book-app-btn"]}>
+              <Link
+                to={`/${doctorInfo._id}/book-appointment`}
+                className={classes["book-app-btn"]}
+              >
                 Book Appointment
-              </button>
+              </Link>
             </div>
           </div>
           <div className={classes["details-section"]}>

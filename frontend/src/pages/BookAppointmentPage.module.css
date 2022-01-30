@@ -1,0 +1,112 @@
+.book-appointment-page {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.top-container {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.doctor-info-container {
+  display: flex;
+  align-items: center;
+}
+
+.doctor-img-container {
+  width: 100px;
+  border: 7px solid rgb(255, 0, 149);
+  border-radius: 50%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.doctor-img-container img {
+  height: 95%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.doctor-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.doctor-name {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.doctor-speciality {
+  color: grey;
+  align-self: center;
+}
+
+.book-app-container {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-top: 10px;
+}
+.cont {
+  height: 100px;
+  width: 100%;
+  background-color: rgb(255, 0, 157);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.book-app-form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin-top: 15px;
+  align-self: center;
+}
+
+.cont span {
+  font-size: 2rem;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 0.1rem;
+}
+
+.slot-input,
+.date-input {
+  margin-bottom: 20px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+  border: none;
+  padding: 10px;
+}
+
+.book-app-btn {
+  width: 40%;
+  margin-bottom: 40px;
+  margin-top: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 7px;
+  align-self: center;
+  background-color: blue;
+  background-image: linear-gradient(315deg, #001aff 0%, #049bff 74%);
+  border: none;
+}
+
+.book-app-form-label {
+  margin-bottom: 5px;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  color: grey;
+}
