@@ -6,17 +6,27 @@ import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import classes from "./App.module.css";
+import DoctorDashboardPage from "./pages/DoctorDashboardPage";
+import { useLocation, useRouteMatch } from "react-router-dom";
 
-function App() {
+function App(props) {
+  // This will match if the current url of the page is of the type specified in path
+  // if it will match then it will return an object otherwise it will return null
+  const match = useRouteMatch({
+    path: "/doctor/:id/dashboard",
+    strict: true,
+    sensitive: true,
+  });
+
   return (
     <div className={classes["app-container"]}>
-      <Header />
+      {!match && <Header />}
       <Switch>
         <Route path="/:id/book-appointment">
           <BookAppointmentPage />
         </Route>
         <Route path="/doctor/:id/dashboard">
-          <h1>Doctors Dashboard</h1>
+          <DoctorDashboardPage />
         </Route>
         <Route path="/:id/details" exact>
           <DoctorDetailsPage />

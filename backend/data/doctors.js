@@ -33,7 +33,7 @@ const doctors = [
     education: "MBBS,MD",
     rating: 4.5,
     speciality: "Physician",
-    image: "/doctor1.png",
+    image: "/doctor1.jfif",
     password: bcrypt.hashSync("123456", 10),
     treatments: [
       "Skin Rashes",

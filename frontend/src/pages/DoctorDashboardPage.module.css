@@ -1,0 +1,153 @@
+.doctor-dashboard-container {
+  /* border: 1px solid black; */
+  width: 100%;
+  /* margin-top: -20px; */
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+}
+
+.sidebar {
+  flex-basis: 20%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(11, 24, 209);
+  color: white;
+  min-height: 100vh;
+}
+
+.doctor-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid rgb(226, 222, 222);
+  padding-bottom: 10px;
+}
+
+.doctor-image-container {
+  width: 40%;
+  padding: 5px;
+  align-self: center;
+  border-radius: 50%;
+  border: 1px solid black;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid rgb(229, 229, 238);
+}
+
+.doctor-image {
+  border-radius: 50%;
+  width: 120px;
+  height: 100px;
+  object-fit: fill;
+}
+
+.doctor-name {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  margin-top: 10px;
+}
+.doctor-speciality {
+  color: white;
+  font-weight: 100;
+}
+
+.sidebar-options {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  align-items: center;
+}
+.sidebar-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid rgb(226, 222, 222);
+  padding: 12px 30px;
+}
+
+.sidebar-option-icon {
+  margin-right: 10px;
+}
+
+.sidebar-option-name {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 80%;
+  /* margin-left: 40px; */
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  /* margin-bottom: 40px; */
+  min-height: 100vh;
+}
+
+.main-container-title {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 1.9rem;
+  width: 90%;
+  align-self: center;
+  padding: 20px 0px;
+  letter-spacing: 0.1rem;
+}
+
+.appointmentContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+.table-container {
+  width: 97%;
+  align-self: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.accept-btn {
+  margin-right: 10px;
+  background-color: rgb(9, 199, 72);
+  padding: 2% 2%;
+  color: white;
+  flex-basis: 40%;
+  border: none;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+}
+.reject-btn {
+  margin-right: 10px;
+  padding: 2% 2%;
+  background-color: rgb(255, 0, 0);
+  color: white;
+  border: none;
+  flex-basis: 40%;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+}
+
+.accept-reject-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.btn-col {
+  width: 30%;
+}
