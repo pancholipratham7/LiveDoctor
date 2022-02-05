@@ -35,6 +35,7 @@ const BookAppointmentPage = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userLoggedInDetails.token}`,
+          doctor: "no",
         },
       };
 
@@ -61,6 +62,11 @@ const BookAppointmentPage = () => {
   //If user has not logged in then redirecting the user to the login page
   if (!userLoggedInDetails) {
     return <Redirect to="/login" />;
+  }
+
+  //If the current user is a doctor then redirect him to the doctor's dashboard
+  if (userLoggedInDetails && userLoggedInDetails.isDoctor) {
+    return <Redirect to={`/doctor/${userLoggedInDetails._id}/dashboard`} />;
   }
 
   return (

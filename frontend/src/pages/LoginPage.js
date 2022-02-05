@@ -18,21 +18,29 @@ const LoginPage = () => {
   // form states
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isDoctorCheck, setDoctorCheck] = useState(false);
 
-  // If user is already logged in then redirecting the user to the homepage
+  // If user is already logged in then redirecting the user to the a different page
   if (userLoggedInDetails && userLoggedInDetails.email) {
-    return <Redirect to="/" />;
+    // If the user is a doctor then redirecting him to the doctor's dashboard
+    if (userLoggedInDetails.isDoctor) {
+      return <Redirect to={`/doctor/${userLoggedInDetails._id}/dashboard`} />;
+    }
+    // If the user is not a doctor then redirecting him to the home page
+    else {
+      return <Redirect to="/" />;
+    }
   }
 
   // login form submit handler
   const loginFormHandler = (e) => {
     e.preventDefault();
-
     // making a login request
     dispatch(
       loginUser({
         email,
         password,
+        isDoctorCheck,
       })
     );
   };
@@ -70,6 +78,18 @@ const LoginPage = () => {
               value={password}
               required
             />
+          </label>
+          <input
+            onChange={(e) =>
+              setDoctorCheck((prevDoctorCheck) => !prevDoctorCheck)
+            }
+            type="checkbox"
+            id="doctorCheckbox"
+            name="doctor"
+            value="doctor"
+          />
+          <label htmlFor="doctorCheckbox">
+            Check this box if you are a doctor
           </label>
           <button className={classes.loginBtn}>
             {loading ? <Loader /> : "Login"}

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const doctorController = require("../controllers/doctorController");
+const isAuthenticated = require("../middlewares/authMiddleware").protect;
 
 // Public
 // Route for getting all doctors

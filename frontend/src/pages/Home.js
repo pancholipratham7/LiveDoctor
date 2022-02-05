@@ -7,7 +7,7 @@ import Star from "@material-ui/icons/Star";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getDoctorsList } from "../store/doctorsListSlice";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 
@@ -19,12 +19,20 @@ const Home = () => {
   // doctors list state
   const { doctors, loading, error } = useSelector((state) => state.doctorsList);
 
+  // userLoggedIn state
+  const { userLoggedInDetails } = useSelector((state) => state.user);
+
   useEffect(() => {
     // Only request for the doctors list if doctors are not present
     if (doctors.length === 0) {
       dispatch(getDoctorsList());
     }
   }, [dispatch, doctors]);
+
+  // if the user logged is a doctor then redirecting him to the doctor's dashboard
+  if (userLoggedInDetails && userLoggedInDetails.isDoctor) {
+    return <Redirect to={`/doctor/${userLoggedInDetails._id}/dashboard`} />;
+  }
 
   return (
     <div className={classes.mainContainer}>

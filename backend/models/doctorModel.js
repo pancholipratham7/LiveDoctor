@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 // Doctor Schema
 const doctorSchema = mongoose.Schema(
@@ -62,6 +63,12 @@ const doctorSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// method for comparing password during login time
+// this method will be called on the instance
+doctorSchema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 // Doctor Model
 const Doctor = mongoose.model("Doctor", doctorSchema);

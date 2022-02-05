@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const User = require("./../models/userModel");
+const Doctor = require("./../models/doctorModel");
 const generateToken = require("./../utils/generateToken").generateToken;
 const Appointment = require("./../models/appointmentModel");
 
@@ -43,29 +44,67 @@ exports.signUp = asyncHandler(async (req, res, next) => {
 
 // Logging up users
 exports.loginUser = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, isDoctorCheck } = req.body;
+  console.log(isDoctorCheck);
 
-  // finding the user first with the email
-  const user = await User.findOne({ email: email });
+  // if login details are entered by a patient
+  if (!isDoctorCheck) {
+    // finding the user first with the email
+    const user = await User.findOne({ email: email });
 
-  // If user found
-  if (!user) {
-    res.status(404);
-    throw new Error("Email is Invalid....!");
+    // If user found
+    if (!user) {
+      res.status(404);
+      throw new Error("Email is Invalid....!");
+    }
+
+    if (user && (await user.comparePassword(password))) {
+      res.status(200).json({
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        isDoctor: user.isDoctor,
+        token: generateToken(user._id),
+      });
+    } else {
+      res.status(404);
+      throw new Error("Entered Password is wrong....!");
+    }
   }
 
-  if (user && (await user.comparePassword(password))) {
-    res.status(200).json({
-      _id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      isDoctor: user.isDoctor,
-      token: generateToken(user._id),
-    });
-  } else {
-    res.status(404);
-    throw new Error("Entered Password is wrong....!");
+  // If login details are entered by a doctor
+  else {
+    // finding the doctor first with the email
+    const doctor = await Doctor.findOne({ email: email });
+
+    // If doctor not found
+    if (!doctor) {
+      res.status(404);
+      throw new Error("Email is Invalid....!");
+    }
+
+    if (doctor && (await doctor.comparePassword(password))) {
+      res.status(200).json({
+        _id: doctor._id,
+        firstName: doctor.firstName,
+        lastName: doctor.lastName,
+        email: doctor.email,
+        isDoctor: doctor.isDoctor,
+        education: doctor.education,
+        speciality: doctor.speciality,
+        fees: doctor.fees,
+        experience: doctor.experience,
+        patientsConsulted: doctor.patientsConsulted,
+        treatments: doctor.treatments,
+        image: doctor.image,
+        rating: doctor.rating,
+        token: generateToken(doctor._id),
+      });
+    } else {
+      res.status(404);
+      throw new Error("Entered Password is wrong....!");
+    }
   }
 });
 

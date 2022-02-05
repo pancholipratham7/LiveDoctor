@@ -15,6 +15,9 @@ function App() {
         <Route path="/:id/book-appointment">
           <BookAppointmentPage />
         </Route>
+        <Route path="/doctor/:id/dashboard">
+          <h1>Doctors Dashboard</h1>
+        </Route>
         <Route path="/:id/details" exact>
           <DoctorDetailsPage />
         </Route>
