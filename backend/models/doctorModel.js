@@ -60,6 +60,12 @@ const doctorSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    appointments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Appointment",
+      },
+    ],
   },
   { timestamps: true }
 );

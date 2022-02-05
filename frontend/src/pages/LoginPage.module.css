@@ -67,7 +67,7 @@
 .inputs {
   display: block;
   width: 100%;
-  padding: 15px 15px;
+  padding: 11px 15px;
   margin-top: 0.3rem;
   border: none;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -110,4 +110,22 @@
   font-weight: 900;
   margin-bottom: 1rem;
   font-family: "Roboto", sans-serif;
+}
+
+.doctorCheckBoxLabel {
+  display: flex;
+  align-items: center;
+  width: 75%;
+  align-self: center;
+  font-size: 0.9rem;
+}
+.doctorCheckBoxText {
+  margin-left: 10px;
+  font-family: "Roboto", sans-serif;
+  color: rgb(0, 195, 255);
+}
+
+.doctorCheckBox {
+  width: 20px;
+  height: 20px;
 }

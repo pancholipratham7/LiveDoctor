@@ -79,18 +79,25 @@ const LoginPage = () => {
               required
             />
           </label>
-          <input
-            onChange={(e) =>
-              setDoctorCheck((prevDoctorCheck) => !prevDoctorCheck)
-            }
-            type="checkbox"
-            id="doctorCheckbox"
-            name="doctor"
-            value="doctor"
-          />
-          <label htmlFor="doctorCheckbox">
-            Check this box if you are a doctor
+          <label
+            className={classes.doctorCheckBoxLabel}
+            htmlFor="doctorCheckbox"
+          >
+            <input
+              onChange={(e) =>
+                setDoctorCheck((prevDoctorCheck) => !prevDoctorCheck)
+              }
+              type="checkbox"
+              id="doctorCheckbox"
+              className={classes.doctorCheckBox}
+              name="doctor"
+              value="doctor"
+            ></input>
+            <span className={classes.doctorCheckBoxText}>
+              Check this box if you are a doctor
+            </span>
           </label>
+
           <button className={classes.loginBtn}>
             {loading ? <Loader /> : "Login"}
           </button>

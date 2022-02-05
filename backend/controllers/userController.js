@@ -140,6 +140,21 @@ exports.bookAnAppointment = asyncHandler(async (req, res, next) => {
     patient: req.user._id,
   });
 
+  // If the new appointment is created then
+  // Adding appointments to the user and doctors collection
+
+  if (newAppointment && newAppointment._id) {
+    // savind the appointment id in the user document
+    const user = await User.findById(req.user._id);
+    user.appointments.push(newAppointment._id);
+    await user.save();
+
+    // saving the appointment id in the doctor document
+    const doctor = await Doctor.findById(doctorId);
+    doctor.appointments.push(newAppointment._id);
+    await doctor.save();
+  }
+
   res.status(200).json({
     status: "Success",
     message:
