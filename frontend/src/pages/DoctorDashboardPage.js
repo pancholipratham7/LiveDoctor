@@ -6,8 +6,14 @@ import BookedIcon from "@material-ui/icons/AssignmentTurnedIn";
 import ScheduleIcon from "@material-ui/icons/WatchLater";
 import Table from "react-bootstrap/Table";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
+import { useSelector } from "react-redux";
+import Dashboard from "@material-ui/icons/Dashboard";
+import { NavLink } from "react-router-dom";
 
 const DoctorDashboardPage = () => {
+  // Doctor login state
+  const { userLoggedInDetails } = useSelector((state) => state.user);
+
   return (
     <div className={classes["doctor-dashboard-container"]}>
       <div className={classes["sidebar"]}>
@@ -26,30 +32,65 @@ const DoctorDashboardPage = () => {
         </div>
         <ul className={classes["sidebar-options"]}>
           <li className={classes["sidebar-option"]}>
-            <DashBoardIcon className={classes["sidebar-option-icon"]} />
-            <span className={classes["sidebar-option-name"]}>Dashboard</span>
+            <NavLink
+              exact
+              className={classes["sidebar-option-link"]}
+              activeClassName={classes["sidebar-option-link-selected"]}
+              to={`/doctor/${userLoggedInDetails._id}/dashboard`}
+            >
+              <DashBoardIcon className={classes["sidebar-option-icon"]} />
+              <span className={classes["sidebar-option-name"]}>Dashboard</span>
+            </NavLink>
           </li>
           <li className={classes["sidebar-option"]}>
-            <RequestIcon className={classes["sidebar-option-icon"]} />
-            <span className={classes["sidebar-option-name"]}>
-              Appointment Requests
-            </span>
+            <NavLink
+              exact
+              className={classes["sidebar-option-link"]}
+              activeClassName={classes["sidebar-option-link-selected"]}
+              to={`/doctor/${userLoggedInDetails._id}/dashboard/appointment-requests`}
+            >
+              <RequestIcon className={classes["sidebar-option-icon"]} />
+              <span className={classes["sidebar-option-name"]}>
+                Appointment Requests
+              </span>
+            </NavLink>
           </li>
           <li className={classes["sidebar-option"]}>
-            <BookedIcon className={classes["sidebar-option-icon"]} />
-            <span className={classes["sidebar-option-name"]}>
-              Booked Appointments
-            </span>
+            <NavLink
+              exact
+              className={classes["sidebar-option-link"]}
+              activeClassName={classes["sidebar-option-link-selected"]}
+              to={`/doctor/${userLoggedInDetails._id}/dashboard/booked-appointments`}
+            >
+              <BookedIcon className={classes["sidebar-option-icon"]} />
+              <span className={classes["sidebar-option-name"]}>
+                Booked Appointments
+              </span>
+            </NavLink>
           </li>
           <li className={classes["sidebar-option"]}>
-            <ScheduleIcon className={classes["sidebar-option-icon"]} />
-            <span className={classes["sidebar-option-name"]}>
-              Schedule Slots
-            </span>
+            <NavLink
+              exact
+              className={classes["sidebar-option-link"]}
+              activeClassName={classes["sidebar-option-link-selected"]}
+              to={`/doctor/${userLoggedInDetails._id}/dashboard/schedule-slots`}
+            >
+              <ScheduleIcon className={classes["sidebar-option-icon"]} />
+              <span className={classes["sidebar-option-name"]}>
+                Schedule Slots
+              </span>
+            </NavLink>
           </li>
           <li className={classes["sidebar-option"]}>
-            <LogoutIcon className={classes["sidebar-option-icon"]} />
-            <span className={classes["sidebar-option-name"]}>Log out</span>
+            <NavLink
+              exact
+              className={classes["sidebar-option-link"]}
+              activeClassName={classes["sidebar-option-link-selected"]}
+              to={`/doctor/${userLoggedInDetails._id}/dashboard/logout`}
+            >
+              <LogoutIcon className={classes["sidebar-option-icon"]} />
+              <span className={classes["sidebar-option-name"]}>Log out</span>
+            </NavLink>
           </li>
         </ul>
       </div>
@@ -74,7 +115,7 @@ const DoctorDashboardPage = () => {
                   <td>20-11-2001</td>
                   <td>5:30-6:30</td>
                   <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Reject</button>
+                    <button className={classes["reject-btn"]}>Cancel</button>
                     <button className={classes["accept-btn"]}>Accept</button>
                   </td>
                 </tr>
@@ -83,7 +124,7 @@ const DoctorDashboardPage = () => {
                   <td>20-11-2001</td>
                   <td>5:30-6:30</td>
                   <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Reject</button>
+                    <button className={classes["reject-btn"]}>Cancel</button>
                     <button className={classes["accept-btn"]}>Accept</button>
                   </td>
                 </tr>
@@ -92,7 +133,7 @@ const DoctorDashboardPage = () => {
                   <td>20-11-2001</td>
                   <td>5:30-6:30</td>
                   <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Reject</button>
+                    <button className={classes["reject-btn"]}>Cancel</button>
                     <button className={classes["accept-btn"]}>Accept</button>
                   </td>
                 </tr>
@@ -101,7 +142,7 @@ const DoctorDashboardPage = () => {
                   <td>20-11-2001</td>
                   <td>5:30-6:30</td>
                   <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Reject</button>
+                    <button className={classes["reject-btn"]}>Cancel</button>
                     <button className={classes["accept-btn"]}>Accept</button>
                   </td>
                 </tr>
@@ -110,7 +151,7 @@ const DoctorDashboardPage = () => {
                   <td>20-11-2001</td>
                   <td>5:30-6:30</td>
                   <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Reject</button>
+                    <button className={classes["reject-btn"]}>Cancel</button>
                     <button className={classes["accept-btn"]}>Accept</button>
                   </td>
                 </tr>
@@ -119,7 +160,7 @@ const DoctorDashboardPage = () => {
                   <td>05-10-2020</td>
                   <td>2:00-3:00</td>
                   <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Reject</button>
+                    <button className={classes["reject-btn"]}>Cancel</button>
                     <button className={classes["accept-btn"]}>Accept</button>
                   </td>
                 </tr>
@@ -128,7 +169,7 @@ const DoctorDashboardPage = () => {
                   <td>13-08-2021</td>
                   <td>4:00-5:00</td>
                   <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Reject</button>
+                    <button className={classes["reject-btn"]}>Cancel</button>
                     <button className={classes["accept-btn"]}>Accept</button>
                   </td>
                 </tr>

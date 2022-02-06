@@ -7,7 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import classes from "./App.module.css";
 import DoctorDashboardPage from "./pages/DoctorDashboardPage";
-import { useLocation, useRouteMatch } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 
 function App(props) {
   // This will match if the current url of the page is of the type specified in path
