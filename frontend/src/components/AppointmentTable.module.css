@@ -1,0 +1,49 @@
+.appointmentContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+.table-container {
+  width: 97%;
+  align-self: center;
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.accept-btn {
+  margin-right: 10px;
+  background-color: rgb(9, 199, 72);
+  padding: 2% 2%;
+  color: white;
+  flex-basis: 40%;
+  border: none;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+}
+.reject-btn {
+  margin-right: 10px;
+  padding: 2% 2%;
+  background-color: rgb(255, 0, 0);
+  color: white;
+  border: none;
+  flex-basis: 40%;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+}
+
+.accept-reject-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.btn-col {
+  width: 30%;
+}

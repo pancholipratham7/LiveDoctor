@@ -161,3 +161,41 @@ exports.bookAnAppointment = asyncHandler(async (req, res, next) => {
       "Wait for some time for the confirmation of your appointment.You will be recieving a mail on your gmail regarding the status of your appointment.",
   });
 });
+
+// getting all requested appointments
+exports.getAllRequestedAppointments = asyncHandler(async (req, res, next) => {
+  // getting all the requested appointments
+
+  // Checking whether the user requesting for appointments is same user or some other user
+  // One user cannot access other user's appointments
+  // req.user._id will be of type object id so we need to convert it into string
+  if (req.params.id !== req.user._id.toString()) {
+    throw new Error("You can't access other patient's appointments");
+  }
+
+  // finding all the "PENDING" appointments of the doctor through doctorId
+  const appointments = await Appointment.find({
+    patient: req.params.id,
+    status: "Pending",
+  });
+  res.status(200).json(appointments);
+});
+
+// getting all booked appointments
+exports.getAllBookedAppointments = asyncHandler(async (req, res, next) => {
+  // getting all the Booked appointments
+
+  // Checking whether the user requesting for appointments is real user or some other user
+  // One user cannot get other user's appointments
+  // req.user._id will be of type object id so we need to convert it into string
+  if (req.params.id !== req.user._id.toString()) {
+    throw new Error("You can't access other patients's appointments");
+  }
+
+  // finding all the "BOOKED" appointments of the user through user Id
+  const appointments = await Appointment.find({
+    patient: req.params.id,
+    status: "Booked",
+  });
+  res.status(200).json(appointments);
+});

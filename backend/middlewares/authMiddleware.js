@@ -22,6 +22,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
       // If the user is not a doctor
       if (req.headers.doctor === "no") {
         req.user = await User.findById(decoded.id).select("-password");
+        console.log("USER", req.user);
       }
       // If user is a doctor
       else {
@@ -39,5 +40,29 @@ exports.protect = asyncHandler(async (req, res, next) => {
   if (!token) {
     res.status(401);
     throw new Error("Not authorized, no token");
+  }
+});
+
+// checking whether the user accessing a route is a doctor or not
+// isDoctor route
+exports.isDoctor = asyncHandler(async (req, res, next) => {
+  // Checking whether the user accessing the route is a doctor or not
+  if (req.user && req.user.isDoctor) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Only doctors can access this route..!");
+  }
+});
+
+// checking whether the user accessing a route is a patient or not
+// isPatient route
+exports.isPatient = asyncHandler(async (req, res, next) => {
+  // Checking whether the user accessing the route is a patient or not
+  if (req.user && !req.user.isDoctor) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Only patients can access this route..!");
   }
 });

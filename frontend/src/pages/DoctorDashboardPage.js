@@ -4,15 +4,29 @@ import DashBoardIcon from "@material-ui/icons/Dashboard";
 import RequestIcon from "@material-ui/icons/AssignmentLate";
 import BookedIcon from "@material-ui/icons/AssignmentTurnedIn";
 import ScheduleIcon from "@material-ui/icons/WatchLater";
-import Table from "react-bootstrap/Table";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
-import { useSelector } from "react-redux";
-import Dashboard from "@material-ui/icons/Dashboard";
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Redirect, Route, Switch } from "react-router-dom";
+import DashboardContent from "./../components/DashBoardContent";
+import { logoutUser } from "../store/userSlice";
 
 const DoctorDashboardPage = () => {
+  // Hooks
+  const dispatch = useDispatch();
+
   // Doctor login state
   const { userLoggedInDetails } = useSelector((state) => state.user);
+
+  // logout button handler
+  const logoutHandler = (e) => {
+    // logging user out
+    dispatch(logoutUser());
+  };
+
+  // If user is not logged then redirecting him to the home page
+  if (!userLoggedInDetails) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className={classes["doctor-dashboard-container"]}>
@@ -83,6 +97,7 @@ const DoctorDashboardPage = () => {
           </li>
           <li className={classes["sidebar-option"]}>
             <NavLink
+              onClick={logoutHandler}
               exact
               className={classes["sidebar-option-link"]}
               activeClassName={classes["sidebar-option-link-selected"]}
@@ -95,88 +110,14 @@ const DoctorDashboardPage = () => {
         </ul>
       </div>
       <div className={classes["main-container"]}>
-        <span className={classes["main-container-title"]}>
-          Appointment Requests
-        </span>
-        <div className={classes.appointmentContainer}>
-          <div className={classes["table-container"]}>
-            <Table style={{ marginBottom: "0" }} responsive bordered hover>
-              <thead>
-                <tr>
-                  <th>Patient Name</th>
-                  <th>Date</th>
-                  <th>Slot</th>
-                  <th className={classes["btn-col"]}>Pending Appointments</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Shruti Saxena</td>
-                  <td>20-11-2001</td>
-                  <td>5:30-6:30</td>
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Shruti Saxena</td>
-                  <td>20-11-2001</td>
-                  <td>5:30-6:30</td>
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Shruti Saxena</td>
-                  <td>20-11-2001</td>
-                  <td>5:30-6:30</td>
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Shruti Saxena</td>
-                  <td>20-11-2001</td>
-                  <td>5:30-6:30</td>
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Shruti Saxena</td>
-                  <td>20-11-2001</td>
-                  <td>5:30-6:30</td>
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Raj Thakur</td>
-                  <td>05-10-2020</td>
-                  <td>2:00-3:00</td>
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Shivam Singh</td>
-                  <td>13-08-2021</td>
-                  <td>4:00-5:00</td>
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-          </div>
-        </div>
+        <Switch>
+          <Route path="/doctor/:id/dashboard/appointment-requests">
+            <DashboardContent title="Appointment Requests" />
+          </Route>
+          <Route path="/doctor/:id/dashboard/booked-appointments">
+            <DashboardContent title="Booked Appointments" />
+          </Route>
+        </Switch>
       </div>
     </div>
   );
