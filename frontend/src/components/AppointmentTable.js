@@ -7,6 +7,8 @@ import { fetchDoctorsAppointments } from "../store/doctorAppointmentsSlice";
 import Loader from "./../components/Loader";
 import Error from "./../components/Error";
 import { useParams } from "react-router-dom";
+import Tick from "@material-ui/icons/CheckCircle";
+import Cross from "@material-ui/icons/Cancel";
 const AppointmentTable = (props) => {
   // hooks
   const dispatch = useDispatch();
@@ -28,13 +30,27 @@ const AppointmentTable = (props) => {
     (state) => state.appointments
   );
 
-  console.log(myAppointments);
+  let filteredAppointments;
+  if (category === "Pending") {
+    filteredAppointments = myAppointments.filter(
+      (appointment) => appointment.status === "Pending"
+    );
+  } else if (category === "Booked") {
+    filteredAppointments = myAppointments.filter(
+      (appointment) => appointment.status === "Booked"
+    );
+  }
+
+  const dateOptions = { year: "numeric", month: "long", day: "numeric" };
 
   return (
     <div className={classes.appointmentContainer}>
       {loading && <Loader />}
       {error && <Error errorMsg={error} />}
-      {!loading && error === "" && (
+      {filteredAppointments.length === 0 && (
+        <span>No Appointments to show....!</span>
+      )}
+      {!loading && error === "" && filteredAppointments.length !== 0 && (
         <div className={classes["table-container"]}>
           <Table style={{ marginBottom: "0" }} responsive bordered hover>
             <thead>
@@ -42,97 +58,67 @@ const AppointmentTable = (props) => {
                 <th>Patient Name</th>
                 <th>Date</th>
                 <th>Slot</th>
+                {category === "Booked" && <th>Status</th>}
+                {category === "Pending" && <th>Status</th>}
                 {category === "Pending" && (
                   <th className={classes["btn-col"]}></th>
                 )}
                 {category === "Booked" && <th>Fees Paid</th>}
+                {category === "Booked" && <th></th>}
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Shruti Saxena</td>
-                <td>20-11-2001</td>
-                <td>5:30-6:30</td>
-                {category === "Pending" && (
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
+              {filteredAppointments.map((appointment) => (
+                <tr>
+                  <td>{`${appointment.patient.firstName} ${appointment.patient.lastName}`}</td>
+                  <td>
+                    {new Date(appointment.appointmentDate).toLocaleDateString(
+                      "en-US",
+                      dateOptions
+                    )}
                   </td>
-                )}
-                {category === "Booked" && <td>Yes</td>}
-              </tr>
-              <tr>
-                <td>Shruti Saxena</td>
-                <td>20-11-2001</td>
-                <td>5:30-6:30</td>
-                {category === "Pending" && (
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                )}
-                {category === "Booked" && <td>Yes</td>}
-              </tr>
-              <tr>
-                <td>Shruti Saxena</td>
-                <td>20-11-2001</td>
-                <td>5:30-6:30</td>
-                {category === "Pending" && (
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                )}
-                {category === "Booked" && <td>Yes</td>}
-              </tr>
-              <tr>
-                <td>Shruti Saxena</td>
-                <td>20-11-2001</td>
-                <td>5:30-6:30</td>
-                {category === "Pending" && (
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                )}
-                {category === "Booked" && <td>Yes</td>}
-              </tr>
-              <tr>
-                <td>Shruti Saxena</td>
-                <td>20-11-2001</td>
-                <td>5:30-6:30</td>
-                {category === "Pending" && (
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                )}
-                {category === "Booked" && <td>Yes</td>}
-              </tr>
-              <tr>
-                <td>Raj Thakur</td>
-                <td>05-10-2020</td>
-                <td>2:00-3:00</td>
-                {category === "Pending" && (
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                )}
-                {category === "Booked" && <td>Yes</td>}
-              </tr>
-              <tr>
-                <td>Shivam Singh</td>
-                <td>13-08-2021</td>
-                <td>4:00-5:00</td>
-                {category === "Pending" && (
-                  <td className={classes["accept-reject-btn-container"]}>
-                    <button className={classes["reject-btn"]}>Cancel</button>
-                    <button className={classes["accept-btn"]}>Accept</button>
-                  </td>
-                )}
-                {category === "Booked" && <td>Yes</td>}
-              </tr>
+                  <td>{`${appointment.startTime}PM - ${appointment.endTime}PM`}</td>
+                  {category === "Booked" && (
+                    <td>
+                      <button className={classes["status-booked-btn"]} disabled>
+                        Booked
+                      </button>
+                    </td>
+                  )}
+                  {category === "Pending" && (
+                    <td>
+                      <button
+                        className={classes["pending-booked-btn"]}
+                        disabled
+                      >
+                        Pending
+                      </button>
+                    </td>
+                  )}
+                  {category === "Pending" && (
+                    <td className={classes["accept-reject-btn-container"]}>
+                      <button className={classes["reject-btn"]}>Cancel</button>
+                      <button className={classes["accept-btn"]}>Accept</button>
+                    </td>
+                  )}
+                  {category === "Booked" && (
+                    <td>
+                      {appointment.isPaid === false ? (
+                        <Tick className={classes["tick-symbol"]} />
+                      ) : (
+                        <Cross className={classes["cross-symbol"]} />
+                      )}
+                    </td>
+                  )}
+                  {category === "Booked" && (
+                    <td>
+                      <button className={classes["consult-btn"]}>
+                        Consult
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              ))}
             </tbody>
           </Table>
         </div>

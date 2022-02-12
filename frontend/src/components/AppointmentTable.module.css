@@ -47,3 +47,40 @@
 .btn-col {
   width: 30%;
 }
+
+.status-booked-btn {
+  width: 100%;
+  color: black;
+  background-color: yellow;
+  border: none;
+  padding: 3px;
+  font-weight: 600;
+}
+.pending-booked-btn {
+  width: 100%;
+  color: red;
+  background-color: yellow;
+  border: none;
+  padding: 3px;
+  font-weight: 600;
+}
+
+.consult-btn {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(255, 4, 4);
+  color: white;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.12rem;
+}
+
+.tick-symbol {
+  color: rgb(0, 255, 64);
+}
+
+.cross-symbol {
+  color: red;
+}
