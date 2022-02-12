@@ -11,14 +11,9 @@ router.route("/").get(doctorController.getAllDoctors);
 //route for getting doctor details
 router.route("/:id/details").get(doctorController.getDoctorDetails);
 
-// route used by doctor to get his all requested appointments
+// route used by doctor to get his all  appointments
 router
-  .route("/:id/requested-appointments")
-  .get(isAuthenticated, isDoctor, doctorController.getAllRequestedAppointments);
-
-// route used by doctor to get all his booked appointments
-router
-  .route("/:id/booked-appointments")
-  .get(isAuthenticated, isDoctor, doctorController.getAllBookedAppointments);
+  .route("/:id/appointments")
+  .get(isAuthenticated, isDoctor, doctorController.getAllAppointments);
 
 module.exports = router;

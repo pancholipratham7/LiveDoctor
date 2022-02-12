@@ -14,14 +14,4 @@ router
   .route("/book-an-appointment")
   .post(isAuthenticated, userController.bookAnAppointment);
 
-//get all patients booked appointments
-router
-  .route("/:id/booked-appointments")
-  .get(isAuthenticated, isPatient, userController.getAllBookedAppointments);
-
-//get all patients booked appointments
-router
-  .route("/:id/requested-appointments")
-  .get(isAuthenticated, isPatient, userController.getAllRequestedAppointments);
-
 module.exports = router;
