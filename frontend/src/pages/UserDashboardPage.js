@@ -1,16 +1,15 @@
 import React from "react";
-import classes from "./DoctorDashboardPage.module.css";
+import classes from "./UserDashboardPage.module.css";
 import DashBoardIcon from "@material-ui/icons/Dashboard";
 import RequestIcon from "@material-ui/icons/AssignmentLate";
 import BookedIcon from "@material-ui/icons/AssignmentTurnedIn";
-import ScheduleIcon from "@material-ui/icons/WatchLater";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Redirect, Route, Switch } from "react-router-dom";
-import DoctorDashboardContent from "../components/DoctorDashBoardContent";
+import UserDashboardContent from "../components/UserDashboardContent.js";
 import { logoutUser } from "../store/userSlice";
 
-const DoctorDashboardPage = () => {
+const UserDashboardPage = () => {
   // Hooks
   const dispatch = useDispatch();
 
@@ -29,21 +28,21 @@ const DoctorDashboardPage = () => {
   }
 
   return (
-    <div className={classes["doctor-dashboard-container"]}>
+    <div className={classes["user-dashboard-container"]}>
       <div className={classes["sidebar"]}>
-        <div className={classes["doctor-details-container"]}>
-          <div className={classes["doctor-image-container"]}>
+        <div className={classes["user-details-container"]}>
+          <div className={classes["user-image-container"]}>
             <img
-              className={classes["doctor-image"]}
+              className={classes["user-image"]}
               src={userLoggedInDetails.image}
               alt=""
             />
           </div>
           <span
-            className={classes["doctor-name"]}
+            className={classes["user-name"]}
           >{`${userLoggedInDetails.firstName} ${userLoggedInDetails.lastName}`}</span>
-          <span className={classes["doctor-speciality"]}>
-            {`${userLoggedInDetails.education} - ${userLoggedInDetails.speciality}`}
+          <span className={classes["user-email"]}>
+            {`${userLoggedInDetails.email}`}
           </span>
         </div>
         <ul className={classes["sidebar-options"]}>
@@ -52,7 +51,7 @@ const DoctorDashboardPage = () => {
               exact
               className={classes["sidebar-option-link"]}
               activeClassName={classes["sidebar-option-link-selected"]}
-              to={`/doctor/${userLoggedInDetails._id}/dashboard`}
+              to={`/user/${userLoggedInDetails._id}/dashboard`}
             >
               <DashBoardIcon className={classes["sidebar-option-icon"]} />
               <span className={classes["sidebar-option-name"]}>Dashboard</span>
@@ -63,7 +62,7 @@ const DoctorDashboardPage = () => {
               exact
               className={classes["sidebar-option-link"]}
               activeClassName={classes["sidebar-option-link-selected"]}
-              to={`/doctor/${userLoggedInDetails._id}/dashboard/appointment-requests`}
+              to={`/user/${userLoggedInDetails._id}/dashboard/appointment-requests`}
             >
               <RequestIcon className={classes["sidebar-option-icon"]} />
               <span className={classes["sidebar-option-name"]}>
@@ -76,7 +75,7 @@ const DoctorDashboardPage = () => {
               exact
               className={classes["sidebar-option-link"]}
               activeClassName={classes["sidebar-option-link-selected"]}
-              to={`/doctor/${userLoggedInDetails._id}/dashboard/booked-appointments`}
+              to={`/user/${userLoggedInDetails._id}/dashboard/booked-appointments`}
             >
               <BookedIcon className={classes["sidebar-option-icon"]} />
               <span className={classes["sidebar-option-name"]}>
@@ -86,24 +85,11 @@ const DoctorDashboardPage = () => {
           </li>
           <li className={classes["sidebar-option"]}>
             <NavLink
-              exact
-              className={classes["sidebar-option-link"]}
-              activeClassName={classes["sidebar-option-link-selected"]}
-              to={`/doctor/${userLoggedInDetails._id}/dashboard/schedule-slots`}
-            >
-              <ScheduleIcon className={classes["sidebar-option-icon"]} />
-              <span className={classes["sidebar-option-name"]}>
-                Schedule Slots
-              </span>
-            </NavLink>
-          </li>
-          <li className={classes["sidebar-option"]}>
-            <NavLink
               onClick={logoutHandler}
               exact
               className={classes["sidebar-option-link"]}
               activeClassName={classes["sidebar-option-link-selected"]}
-              to={`/doctor/${userLoggedInDetails._id}/dashboard/logout`}
+              to={`/user/${userLoggedInDetails._id}/dashboard/logout`}
             >
               <LogoutIcon className={classes["sidebar-option-icon"]} />
               <span className={classes["sidebar-option-name"]}>Log out</span>
@@ -113,11 +99,11 @@ const DoctorDashboardPage = () => {
       </div>
       <div className={classes["main-container"]}>
         <Switch>
-          <Route path="/doctor/:id/dashboard/appointment-requests">
-            <DoctorDashboardContent title="Appointment Requests" />
+          <Route path="/user/:id/dashboard/appointment-requests">
+            <UserDashboardContent title="Appointment Requests" />
           </Route>
-          <Route path="/doctor/:id/dashboard/booked-appointments">
-            <DoctorDashboardContent title="Booked Appointments" />
+          <Route path="/user/:id/dashboard/booked-appointments">
+            <UserDashboardContent title="Booked Appointments" />
           </Route>
         </Switch>
       </div>
@@ -125,4 +111,4 @@ const DoctorDashboardPage = () => {
   );
 };
 
-export default DoctorDashboardPage;
+export default UserDashboardPage;

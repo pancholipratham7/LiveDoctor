@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import classes from "./AppointmentTable.module.css";
+import classes from "./UserAppointmentTable.module.css";
 import Table from "react-bootstrap/Table";
 import { useDispatch } from "react-redux";
-import { fetchDoctorsAppointments } from "../store/doctorAppointmentsSlice";
+import { fetchUsersAppointments } from "../store/userAppointmentSlice";
 import Loader from "./../components/Loader";
 import Error from "./../components/Error";
 import { useParams } from "react-router-dom";
 import Tick from "@material-ui/icons/CheckCircle";
 import Cross from "@material-ui/icons/Cancel";
-const AppointmentTable = (props) => {
+
+const UserAppointmentTable = (props) => {
   // hooks
   const dispatch = useDispatch();
   const params = useParams();
@@ -21,13 +22,13 @@ const AppointmentTable = (props) => {
       ? "Booked"
       : "";
 
-  // get all appointments of the doctor
+  // get all appointments of the user
   useEffect(() => {
-    dispatch(fetchDoctorsAppointments(params.id));
+    dispatch(fetchUsersAppointments(params.id));
   }, [dispatch, params.id]);
 
   const { myAppointments, loading, error } = useSelector(
-    (state) => state.appointments
+    (state) => state.userAppointments
   );
 
   let filteredAppointments;
@@ -47,7 +48,7 @@ const AppointmentTable = (props) => {
     <div className={classes.appointmentContainer}>
       {loading && <Loader />}
       {error && <Error errorMsg={error} />}
-      {filteredAppointments.length === 0 && (
+      {error === "" && !loading && filteredAppointments.length === 0 && (
         <span>No Appointments to show....!</span>
       )}
       {!loading && error === "" && filteredAppointments.length !== 0 && (
@@ -55,22 +56,20 @@ const AppointmentTable = (props) => {
           <Table style={{ marginBottom: "0" }} responsive bordered hover>
             <thead>
               <tr>
-                <th>Patient Name</th>
+                <th>Doctor Name</th>
                 <th>Date</th>
                 <th>Slot</th>
                 {category === "Booked" && <th>Status</th>}
                 {category === "Pending" && <th>Status</th>}
-                {category === "Pending" && (
-                  <th className={classes["btn-col"]}></th>
-                )}
+                {category === "Pending" && <th></th>}
                 {category === "Booked" && <th>Fees Paid</th>}
-                {category === "Booked" && <th></th>}
+                {category === "Booked" && <th>Pay Fees</th>}
               </tr>
             </thead>
             <tbody>
               {filteredAppointments.map((appointment) => (
-                <tr>
-                  <td>{`${appointment.patient.firstName} ${appointment.patient.lastName}`}</td>
+                <tr key={appointment._id}>
+                  <td>{`${appointment.doctor.firstName} ${appointment.doctor.lastName}`}</td>
                   <td>
                     {new Date(appointment.appointmentDate).toLocaleDateString(
                       "en-US",
@@ -80,7 +79,7 @@ const AppointmentTable = (props) => {
                   <td>{`${appointment.startTime}PM - ${appointment.endTime}PM`}</td>
                   {category === "Booked" && (
                     <td>
-                      <button className={classes["status-booked-btn"]} disabled>
+                      <button className={classes["status-booked-tag"]} disabled>
                         Booked
                       </button>
                     </td>
@@ -88,7 +87,7 @@ const AppointmentTable = (props) => {
                   {category === "Pending" && (
                     <td>
                       <button
-                        className={classes["pending-booked-btn"]}
+                        className={classes["status-pending-tag"]}
                         disabled
                       >
                         Pending
@@ -96,14 +95,11 @@ const AppointmentTable = (props) => {
                     </td>
                   )}
                   {category === "Pending" && (
-                    <td className={classes["accept-reject-btn-container"]}>
-                      <button className={classes["reject-btn"]}>Cancel</button>
-                      <button className={classes["accept-btn"]}>Accept</button>
-                    </td>
+                    <td>Wait for some time. An email will be sent to you...</td>
                   )}
                   {category === "Booked" && (
                     <td>
-                      {appointment.isPaid === false ? (
+                      {appointment.isPaid === true ? (
                         <Tick className={classes["tick-symbol"]} />
                       ) : (
                         <Cross className={classes["cross-symbol"]} />
@@ -112,8 +108,8 @@ const AppointmentTable = (props) => {
                   )}
                   {category === "Booked" && (
                     <td>
-                      <button className={classes["consult-btn"]}>
-                        Consult
+                      <button className={classes["pay-fees-btn"]}>
+                        Pay Fees
                       </button>
                     </td>
                   )}
@@ -127,4 +123,4 @@ const AppointmentTable = (props) => {
   );
 };
 
-export default AppointmentTable;
+export default UserAppointmentTable;

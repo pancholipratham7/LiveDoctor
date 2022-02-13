@@ -1,0 +1,50 @@
+.appointmentContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+.table-container {
+  width: 97%;
+  align-self: center;
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.status-booked-tag {
+  width: 100%;
+  color: black;
+  background-color: yellow;
+  border: none;
+  padding: 3px;
+  font-weight: 600;
+}
+.status-pending-tag {
+  width: 100%;
+  color: red;
+  background-color: yellow;
+  border: none;
+  padding: 3px;
+  font-weight: 600;
+}
+
+.tick-symbol {
+  color: rgb(0, 255, 64);
+}
+
+.cross-symbol {
+  color: red;
+}
+
+.pay-fees-btn {
+  width: 100%;
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 6px;
+  border-radius: 10px;
+}

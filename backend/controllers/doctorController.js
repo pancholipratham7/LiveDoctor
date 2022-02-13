@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const Doctor = require("../models/doctorModel");
 const Appointment = require("../models/appointmentModel");
+const sendMail = require("../utils/sendMail");
+const { update } = require("../models/doctorModel");
 
 // get all doctors
 exports.getAllDoctors = asyncHandler(async (req, res, next) => {
@@ -49,4 +51,67 @@ exports.getAllAppointments = asyncHandler(async (req, res, next) => {
 
   console.log(appointments);
   res.status(200).json(appointments);
+});
+
+//doctor updating Appointment
+exports.updateAppointmentStatus = asyncHandler(async (req, res, next) => {
+  // finding the appointment
+  const appointment = await Appointment.findById(req.params.id);
+
+  // checking whether the doctor id in the token and doctor id in appointment document matches or not
+  // because no doctor change the appointment of other doctors
+  if (!appointment) {
+    throw new Error("No appointment found with this Id");
+  }
+
+  if (appointment.doctor.toString() !== req.user._id.toString()) {
+    throw new Error("You cannot change other doctor's apppointment status");
+  }
+
+  // Updating the appoitnment
+  const updatedAppointment = await Appointment.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: req.body },
+    { returnDocument: "after" }
+  ).populate("patient doctor");
+
+  console.log("THis is the updated appoitnemnt", updatedAppointment);
+
+  //Mail details like sender,reciever,subject,text
+  let mailDetails = {
+    from: "livedoctor7@gmail.com",
+    to: updatedAppointment.patient.email,
+    subject: "Mail Regarding your Appointment Request",
+  };
+
+  //Date formatting options
+  const dateOptions = { year: "numeric", month: "long", day: "numeric" };
+
+  if (req.body.status === "Booked") {
+    mailDetails.text = `Your appointment with doctor ${
+      updatedAppointment.doctor.firstName
+    } ${updatedAppointment.doctor.lastName} on ${new Date(
+      updatedAppointment.appointmentDate
+    ).toLocaleDateString("en-US", dateOptions)} for slot ${
+      updatedAppointment.startTime
+    }PM - ${
+      updatedAppointment.endTime
+    }PM has been booked.For the doctor to consult you on the alloted date and slot first you need to pay the fees.Visit this link to pay the fees http://localhost:3000/user/${
+      updatedAppointment.patient._id
+    }/dashboard/booked-appointments`;
+    await sendMail(mailDetails);
+  } else if (req.body.status === "Rejected") {
+    mailDetails.text = `Your appointment with doctor ${
+      updatedAppointment.doctor.firstName
+    } ${updatedAppointment.doctor.lastName} on ${new Date(
+      updatedAppointment.appointmentDate
+    ).toLocaleDateString("en-US", dateOptions)} for slot ${
+      updatedAppointment.startTime
+    }PM - ${
+      updatedAppointment.endTime
+    }PM has been rejected because the doctor is not available for the alloted time and slot so please try to book appointment on some other date or slot`;
+    await sendMail(mailDetails);
+  }
+
+  res.status(200).json(updatedAppointment);
 });

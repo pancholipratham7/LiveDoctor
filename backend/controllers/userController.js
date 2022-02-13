@@ -35,6 +35,7 @@ exports.signUp = asyncHandler(async (req, res, next) => {
       lastName: user.lastName,
       email: user.email,
       isDoctor: user.isDoctor,
+      image: user.image,
       token: generateToken(user._id),
     });
   } else {
@@ -65,6 +66,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
         lastName: user.lastName,
         email: user.email,
         isDoctor: user.isDoctor,
+        image: user.image,
         token: generateToken(user._id),
       });
     } else {
@@ -162,40 +164,22 @@ exports.bookAnAppointment = asyncHandler(async (req, res, next) => {
   });
 });
 
-// getting all requested appointments
-exports.getAllRequestedAppointments = asyncHandler(async (req, res, next) => {
-  // getting all the requested appointments
-
-  // Checking whether the user requesting for appointments is same user or some other user
-  // One user cannot access other user's appointments
-  // req.user._id will be of type object id so we need to convert it into string
-  if (req.params.id !== req.user._id.toString()) {
-    throw new Error("You can't access other patient's appointments");
-  }
-
-  // finding all the "PENDING" appointments of the doctor through doctorId
-  const appointments = await Appointment.find({
-    patient: req.params.id,
-    status: "Pending",
-  });
-  res.status(200).json(appointments);
-});
-
-// getting all booked appointments
-exports.getAllBookedAppointments = asyncHandler(async (req, res, next) => {
-  // getting all the Booked appointments
+// get all users appointments
+exports.getAllAppointments = asyncHandler(async (req, res, next) => {
+  // getting all the  appointments
 
   // Checking whether the user requesting for appointments is real user or some other user
   // One user cannot get other user's appointments
   // req.user._id will be of type object id so we need to convert it into string
-  if (req.params.id !== req.user._id.toString()) {
-    throw new Error("You can't access other patients's appointments");
+
+  if (req.params.id.toString() !== req.user._id.toString()) {
+    throw new Error("You can't access other user's appointments");
   }
 
-  // finding all the "BOOKED" appointments of the user through user Id
   const appointments = await Appointment.find({
     patient: req.params.id,
-    status: "Booked",
-  });
+  }).populate("patient doctor");
+
+  console.log(appointments);
   res.status(200).json(appointments);
 });

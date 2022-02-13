@@ -16,4 +16,9 @@ router
   .route("/:id/appointments")
   .get(isAuthenticated, isDoctor, doctorController.getAllAppointments);
 
+// update appointment status
+router
+  .route("/:id/appointment")
+  .patch(isAuthenticated, isDoctor, doctorController.updateAppointmentStatus);
+
 module.exports = router;

@@ -6,6 +6,11 @@ const isPatient = require("../middlewares/authMiddleware").isPatient;
 
 // all user related routes
 
+// get all appointments
+router
+  .route("/:id/appointments")
+  .get(isAuthenticated, isPatient, userController.getAllAppointments);
+
 router.route("/signUp").post(userController.signUp);
 router.route("/login").post(userController.loginUser);
 

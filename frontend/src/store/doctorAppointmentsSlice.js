@@ -24,6 +24,23 @@ const doctorAppointmentsSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    updateAppointmentStatusRequest(state, action) {
+      state.loading = true;
+    },
+    updateAppointmentStatusSuccess(state, action) {
+      state.myAppointments = state.myAppointments.map((appointment) => {
+        if (appointment._id.toString() === action.payload._id.toString()) {
+          appointment.status = action.payload.status;
+        }
+        return appointment;
+      });
+      state.loading = false;
+      state.error = "";
+    },
+    updateAppointmentStatusFailed(state, action) {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -63,3 +80,40 @@ export const fetchDoctorsAppointments = (id) => async (dispatch, getState) => {
     );
   }
 };
+
+// update Appointment status
+export const updateAppointmentStatus =
+  (id, status) => async (dispatch, getState) => {
+    try {
+      // making the loading status true
+      dispatch(doctorAppointmentsActions.updateAppointmentStatusRequest());
+
+      // getting token
+      const token = getState().user.userLoggedInDetails.token;
+
+      // setting up the headers
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // making the request at the backend to change the status of the appointment
+      // making the request at the backend
+      const { data } = await axios.patch(
+        `http://localhost:5000/api/doctors/${id}/appointment`,
+        {
+          status: status,
+        },
+        config
+      );
+      dispatch(doctorAppointmentsActions.updateAppointmentStatusSuccess(data));
+    } catch (err) {
+      dispatch(
+        doctorAppointmentsActions.updateAppointmentStatusFailed(
+          err.response.data.message
+        )
+      );
+    }
+  };

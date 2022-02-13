@@ -7,7 +7,6 @@ const Doctor = require("./../models/doctorModel");
 //it will check whether the user is authenticated or not
 exports.protect = asyncHandler(async (req, res, next) => {
   let token;
-  console.log("Hello guys");
 
   if (
     req.headers.authorization &&
@@ -22,7 +21,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
       // If the user is not a doctor
       if (req.headers.doctor === "no") {
         req.user = await User.findById(decoded.id).select("-password");
-        console.log("USER", req.user);
       }
       // If user is a doctor
       else {
