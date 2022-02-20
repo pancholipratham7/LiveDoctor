@@ -7,6 +7,7 @@ const cors = require("cors");
 // All routers
 const doctorsRouter = require("./routes/doctorRoutes");
 const usersRouter = require("./routes/userRoutes");
+const paymentRouter = require("./routes/paymentRoutes");
 
 // setting up connection to the database
 connectDb();
@@ -24,6 +25,7 @@ app.use(
 //  api routes for doctors
 app.use("/api/doctors", doctorsRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/payment", paymentRouter);
 
 // If a page is not found
 app.use(middlewares.notFound);
