@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Razorpay = require("razorpay");
+const crypto = require("crypto");
+const Appointment = require("./../models/appointmentModel");
 
 // creating order at razorpay
 exports.createRazorPayOrder = asyncHandler(async (req, res, next) => {
@@ -9,7 +11,7 @@ exports.createRazorPayOrder = asyncHandler(async (req, res, next) => {
   });
 
   const options = {
-    amount: req.body.amount, // amount in smallest currency unit
+    amount: req.body.amount * 100, // amount in smallest currency unit
     currency: "INR",
     receipt: "receipt_order_74394",
   };
@@ -28,29 +30,27 @@ exports.paymentSuccess = asyncHandler(async (req, res, next) => {
     razorpayPaymentId,
     razorpayOrderId,
     razorpaySignature,
+    appointmentId,
   } = req.body;
 
-  const shasum = crypto.createHmac("sha256", "<YOUR RAZORPAY SECRET>");
+  const shasum = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
   shasum.update(`${orderCreationId}|${razorpayPaymentId}`);
   const digest = shasum.digest("hex");
 
   if (digest !== razorpaySignature)
     return res.status(400).json({ msg: "Transaction not legit!" });
 
-  const newPayment = PaymentDetails({
-    razorpayDetails: {
-      orderId: razorpayOrderId,
-      paymentId: razorpayPaymentId,
-      signature: razorpaySignature,
-    },
-    success: true,
-  });
-
-  await newPayment.save();
+  // if the payment is verfied then we need to update the appointment to isPaid=true
+  const updatedAppointment = await Appointment.findByIdAndUpdate(
+    appointmentId,
+    { $set: { isPaid: true } },
+    { new: true }
+  );
 
   res.json({
     msg: "success",
     orderId: razorpayOrderId,
     paymentId: razorpayPaymentId,
+    updatedAppointment,
   });
 });

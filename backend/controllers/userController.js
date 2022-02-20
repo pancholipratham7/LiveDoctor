@@ -112,7 +112,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 
 // book an appointment
 exports.bookAnAppointment = asyncHandler(async (req, res, next) => {
-  const { appointmentDate, slot, doctorId } = req.body;
+  const { appointmentDate, slot, doctorId, fees } = req.body;
   const startTime = slot.split("-")[0];
   const endTime = slot.split("-")[1];
 
@@ -140,6 +140,7 @@ exports.bookAnAppointment = asyncHandler(async (req, res, next) => {
     appointmentDate,
     doctor: doctorId,
     patient: req.user._id,
+    fees: fees,
   });
 
   // If the new appointment is created then

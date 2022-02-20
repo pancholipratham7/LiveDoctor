@@ -24,6 +24,14 @@ const userAppointmentsSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    updateAppointmentPaymentStatus(state, action) {
+      state.myAppointments = state.myAppointments.map((appointment) => {
+        if (appointment._id.toString() === action.payload.toString()) {
+          appointment.isPaid = true;
+        }
+        return appointment;
+      });
+    },
   },
 });
 

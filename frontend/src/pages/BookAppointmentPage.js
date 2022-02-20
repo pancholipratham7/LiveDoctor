@@ -46,6 +46,7 @@ const BookAppointmentPage = () => {
           slot: bookingSlot,
           userId: userLoggedInDetails._id,
           doctorId: params.id,
+          fees: doctorInfo.fees,
         },
         config
       );

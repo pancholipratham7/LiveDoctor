@@ -139,7 +139,7 @@ const AppointmentTable = (props) => {
                       )}
                     </td>
                   )}
-                  {category === "Booked" && (
+                  {category === "Booked" && appointment.isPaid && (
                     <td>
                       <button
                         data-id={appointment._id}
