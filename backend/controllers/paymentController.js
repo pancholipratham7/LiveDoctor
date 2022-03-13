@@ -3,7 +3,7 @@ const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const Appointment = require("./../models/appointmentModel");
 
-// creating order at razorpay
+// creating order at razorpay servers
 exports.createRazorPayOrder = asyncHandler(async (req, res, next) => {
   const instance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -24,6 +24,7 @@ exports.createRazorPayOrder = asyncHandler(async (req, res, next) => {
 });
 
 // payment success
+// verifying payment
 exports.paymentSuccess = asyncHandler(async (req, res, next) => {
   const {
     orderCreationId,
