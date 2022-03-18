@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import classes from "./DoctorAppointmentTable.module.css";
 import Table from "react-bootstrap/Table";
@@ -12,10 +12,16 @@ import Error from "./Error";
 import { useParams } from "react-router-dom";
 import Tick from "@material-ui/icons/CheckCircle";
 import Cross from "@material-ui/icons/Cancel";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+
 const AppointmentTable = (props) => {
   // hooks
   const dispatch = useDispatch();
   const params = useParams();
+
+  // modal state
+  const [showModal, setShowModal] = useState(false);
 
   const category =
     props.category === "Appointment Requests"
@@ -60,6 +66,16 @@ const AppointmentTable = (props) => {
     );
   };
 
+  // consult btn handler
+  const consultBtnHandler = () => {
+    setShowModal(true);
+  };
+
+  // close modal
+  const hideModalHandler = () => {
+    setShowModal(false);
+  };
+
   return (
     <div className={classes.appointmentContainer}>
       {loading && <Loader />}
@@ -67,6 +83,20 @@ const AppointmentTable = (props) => {
       {error === "" && !loading && filteredAppointments.length === 0 && (
         <span>No Appointments to show....!</span>
       )}
+      <Modal show={showModal} onHide={hideModalHandler}>
+        <Modal.Header closeButton>
+          <Modal.Title>Message</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Do you want to consult the patient ?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={hideModalHandler}>
+            No
+          </Button>
+          <Button variant="primary" onClick={hideModalHandler}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
       {!loading && error === "" && filteredAppointments.length !== 0 && (
         <div className={classes["table-container"]}>
           <Table style={{ marginBottom: "0" }} responsive bordered hover>
@@ -142,6 +172,7 @@ const AppointmentTable = (props) => {
                   {category === "Booked" && appointment.isPaid && (
                     <td>
                       <button
+                        onClick={consultBtnHandler}
                         data-id={appointment._id}
                         className={classes["consult-btn"]}
                       >
