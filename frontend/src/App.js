@@ -9,6 +9,7 @@ import classes from "./App.module.css";
 import DoctorDashboardPage from "./pages/DoctorDashboardPage";
 import { useRouteMatch } from "react-router-dom";
 import UserDashboardPage from "./pages/UserDashboardPage";
+import MeetingPage from "./pages/MeetingPage";
 
 function App(props) {
   // This will match if the current url of the page is of the type specified in path
@@ -23,6 +24,9 @@ function App(props) {
     <div className={classes["app-container"]}>
       {!match && <Header />}
       <Switch>
+        <Route path="/meeting/:id">
+          <MeetingPage />
+        </Route>
         <Route path="/user/:id/dashboard">
           <UserDashboardPage />
         </Route>

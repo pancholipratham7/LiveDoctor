@@ -115,3 +115,25 @@ exports.updateAppointmentStatus = asyncHandler(async (req, res, next) => {
 
   res.status(200).json(updatedAppointment);
 });
+
+// sending mail to the patient if the meeting has started
+exports.sendNewMeetingId = asyncHandler(async (req, res, next) => {
+  // finding the appointment with the appointment ID
+  const appointment = await Appointment.findById(
+    req.body.AppointmentId
+  ).populate("doctor patient");
+
+  //Mail details like sender,reciever,subject,text
+  let mailDetails = {
+    from: "livedoctor7@gmail.com",
+    to: appointment.patient.email,
+    subject: "Mail Regarding your Appointment Request",
+  };
+
+  mailDetails.text = `Meeting Id - ${req.body.meetingId}
+  URL for joining the meeting - http://localhost:3000/meeting/${req.body.meetingId}`;
+
+  // sending mail
+  await sendMail(mailDetails);
+  res.send("Mail sent successfully");
+});

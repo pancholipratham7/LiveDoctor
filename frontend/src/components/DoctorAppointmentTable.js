@@ -9,19 +9,26 @@ import {
 } from "../store/doctorAppointmentsSlice";
 import Loader from "./Loader";
 import Error from "./Error";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Tick from "@material-ui/icons/CheckCircle";
 import Cross from "@material-ui/icons/Cancel";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import uniqid from "uniqid";
+import axios from "axios";
 
 const AppointmentTable = (props) => {
   // hooks
   const dispatch = useDispatch();
   const params = useParams();
+  const history = useHistory();
 
   // modal state
   const [showModal, setShowModal] = useState(false);
+  const [modalLoader, setModalLoader] = useState(false);
+
+  //Appointment id state for storing the id for which the consult btn is clicked
+  const [AppointmentId, setAppointmentId] = useState(null);
 
   const category =
     props.category === "Appointment Requests"
@@ -67,13 +74,35 @@ const AppointmentTable = (props) => {
   };
 
   // consult btn handler
-  const consultBtnHandler = () => {
+  const consultBtnHandler = (e) => {
+    setAppointmentId(e.target.dataset.id);
     setShowModal(true);
   };
 
-  // close modal
-  const hideModalHandler = () => {
+  const hideModalHandler = (e) => {
     setShowModal(false);
+  };
+
+  const startMeetingHandler = async (e) => {
+    try {
+      // unique meeting id created
+      const meetingId = uniqid();
+
+      setModalLoader(true);
+
+      // sending a mail to the patient that the meeting is going to start
+      const { data } = await axios.post(
+        `http://localhost:5000/api/doctors/send-newMeetingId`,
+        {
+          AppointmentId,
+          meetingId,
+        }
+      );
+      setModalLoader(false);
+      history.push(`/meeting/${meetingId}`);
+    } catch (err) {
+      console.log(err.response.data.message);
+    }
   };
 
   return (
@@ -83,20 +112,26 @@ const AppointmentTable = (props) => {
       {error === "" && !loading && filteredAppointments.length === 0 && (
         <span>No Appointments to show....!</span>
       )}
-      <Modal show={showModal} onHide={hideModalHandler}>
-        <Modal.Header closeButton>
-          <Modal.Title>Message</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Do you want to consult the patient ?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={hideModalHandler}>
-            No
-          </Button>
-          <Button variant="primary" onClick={hideModalHandler}>
-            Yes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {showModal && (
+        <Modal show={showModal} onHide={hideModalHandler}>
+          <Modal.Header closeButton>
+            <Modal.Title>Start Video Meeting</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {!modalLoader &&
+              "Do you want to start the meeting with the patient ?"}
+            {modalLoader && <Loader />}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={hideModalHandler}>
+              No
+            </Button>
+            <Button variant="primary" onClick={startMeetingHandler}>
+              Yes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
       {!loading && error === "" && filteredAppointments.length !== 0 && (
         <div className={classes["table-container"]}>
           <Table style={{ marginBottom: "0" }} responsive bordered hover>

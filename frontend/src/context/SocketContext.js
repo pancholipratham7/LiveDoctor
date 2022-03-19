@@ -6,17 +6,17 @@ import { io } from "socket.io-client";
 export const SocketContext = createContext();
 
 // io from socket library
-const socket = io("http://localhost:5000");
+export const socket = io("http://localhost:5000");
 
 export const SocketContextProvider = (props) => {
-  // this state will store the socket id
-  const [me, setMe] = useState("");
+  const [meetingId, setMeetingId] = useState(null);
 
-  // updating the socket id state
-  socket.on("me", (data) => setMe(data));
+  const joinMeeting = (id) => {
+    socket.emit("join-meeting", id);
+  };
 
   return (
-    <SocketContext.Provider value={{ me }}>
+    <SocketContext.Provider value={{ meetingId, joinMeeting }}>
       {props.children}
     </SocketContext.Provider>
   );
