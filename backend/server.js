@@ -3,6 +3,15 @@ const app = express();
 const connectDb = require("./database");
 const middlewares = require("./middlewares/errorMiddlewares");
 const cors = require("cors");
+const server = require("http").createServer(app);
+
+// io
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
 
 // All routers
 const doctorsRouter = require("./routes/doctorRoutes");
@@ -34,6 +43,12 @@ app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
 // setting up the server
-app.listen(5000, () => {
+server.listen(5000, () => {
   console.log("Server Started");
+});
+
+// on connection
+io.on("connection", function (socket) {
+  console.log("💥", socket.id);
+  socket.emit("me", socket.id);
 });
