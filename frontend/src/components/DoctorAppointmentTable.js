@@ -16,6 +16,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import uniqid from "uniqid";
 import axios from "axios";
+import password from "secure-random-password";
 
 const AppointmentTable = (props) => {
   // hooks
@@ -76,6 +77,7 @@ const AppointmentTable = (props) => {
   // consult btn handler
   const consultBtnHandler = (e) => {
     setAppointmentId(e.target.dataset.id);
+    // showing the modal on clicking the consult btn
     setShowModal(true);
   };
 
@@ -88,6 +90,9 @@ const AppointmentTable = (props) => {
       // unique meeting id created
       const meetingId = uniqid();
 
+      //unique meeting password
+      const meetingPassword = password.randomPassword();
+
       setModalLoader(true);
 
       // sending a mail to the patient that the meeting is going to start
@@ -96,6 +101,7 @@ const AppointmentTable = (props) => {
         {
           AppointmentId,
           meetingId,
+          meetingPassword,
         }
       );
       setModalLoader(false);

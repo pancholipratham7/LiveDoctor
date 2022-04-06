@@ -130,8 +130,9 @@ exports.sendNewMeetingId = asyncHandler(async (req, res, next) => {
     subject: "Mail Regarding your Appointment Request",
   };
 
-  mailDetails.text = `Meeting Id - ${req.body.meetingId}
-  URL for joining the meeting - http://localhost:3000/meeting/${req.body.meetingId}`;
+  mailDetails.text = `Meeting Id : ${req.body.meetingId}
+  Meeting Password : ${req.body.meetingPassword}
+  URL for joining the meeting - http://localhost:3000/join-meeting`;
 
   // sending mail
   await sendMail(mailDetails);
