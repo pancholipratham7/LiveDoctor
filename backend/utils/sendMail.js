@@ -1,11 +1,13 @@
 const nodemailer = require("nodemailer");
+console.log(process.env.GMAIL_PASSWORD);
 
 // creating transporter for mail which will contain the service used to send the mail and sender authentication details
 let mailTransporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "livedoctor7@gmail.com",
-    pass: "prathampancholi",
+    // gmail app-specific password for less secure apps
+    pass: process.env.GMAIL_PASSWORD,
   },
   //   Search why we used this
   tls: {

@@ -22,6 +22,6 @@ router
   .patch(isAuthenticated, isDoctor, doctorController.updateAppointmentStatus);
 
 // meeting started mail to patient
-router.route("/send-newMeetingId").post(doctorController.sendNewMeetingId);
+router.route("/send-callId").post(doctorController.sendCallIdToUser);
 
 module.exports = router;

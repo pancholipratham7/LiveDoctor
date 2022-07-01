@@ -10,6 +10,7 @@ const JoinMeetingPage = () => {
   // join meeting handler
   const joinMeetingHandler = (e) => {
     e.preventDefault();
+    // patient joining the meeting
     console.log(meetingId, meetingPassword);
   };
 

@@ -49,7 +49,6 @@ exports.getAllAppointments = asyncHandler(async (req, res, next) => {
     doctor: req.params.id,
   }).populate("patient");
 
-  console.log(appointments);
   res.status(200).json(appointments);
 });
 
@@ -75,7 +74,7 @@ exports.updateAppointmentStatus = asyncHandler(async (req, res, next) => {
     { returnDocument: "after" }
   ).populate("patient doctor");
 
-  console.log("THis is the updated appoitnemnt", updatedAppointment);
+  console.log("THis is the updated appoitnment", updatedAppointment);
 
   //Mail details like sender,reciever,subject,text
   let mailDetails = {
@@ -117,11 +116,12 @@ exports.updateAppointmentStatus = asyncHandler(async (req, res, next) => {
 });
 
 // sending mail to the patient if the meeting has started
-exports.sendNewMeetingId = asyncHandler(async (req, res, next) => {
+exports.sendCallIdToUser = asyncHandler(async (req, res, next) => {
   // finding the appointment with the appointment ID
   const appointment = await Appointment.findById(
     req.body.AppointmentId
   ).populate("doctor patient");
+  console.log(appointment.patient.email);
 
   //Mail details like sender,reciever,subject,text
   let mailDetails = {
@@ -130,9 +130,7 @@ exports.sendNewMeetingId = asyncHandler(async (req, res, next) => {
     subject: "Mail Regarding your Appointment Request",
   };
 
-  mailDetails.text = `Meeting Id : ${req.body.meetingId}
-  Meeting Password : ${req.body.meetingPassword}
-  URL for joining the meeting - http://localhost:3000/join-meeting`;
+  mailDetails.text = `For attending a video call with the doctor visit this URL - http://localhost:3000/video-call/${req.body.callId}`;
 
   // sending mail
   await sendMail(mailDetails);

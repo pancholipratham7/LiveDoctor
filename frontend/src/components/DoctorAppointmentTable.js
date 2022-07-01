@@ -16,7 +16,6 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import uniqid from "uniqid";
 import axios from "axios";
-import password from "secure-random-password";
 
 const AppointmentTable = (props) => {
   // hooks
@@ -88,24 +87,21 @@ const AppointmentTable = (props) => {
   const startMeetingHandler = async (e) => {
     try {
       // unique meeting id created
-      const meetingId = uniqid();
-
-      //unique meeting password
-      const meetingPassword = password.randomPassword();
+      const callId = uniqid();
 
       setModalLoader(true);
 
       // sending a mail to the patient that the meeting is going to start
       const { data } = await axios.post(
-        `http://localhost:5000/api/doctors/send-newMeetingId`,
+        `http://localhost:5000/api/doctors/send-callId`,
         {
           AppointmentId,
-          meetingId,
-          meetingPassword,
+          callId,
         }
       );
       setModalLoader(false);
-      history.push(`/meeting/${meetingId}`);
+      console.log(data);
+      history.push(`/meeting/${callId}`);
     } catch (err) {
       console.log(err.response.data.message);
     }
