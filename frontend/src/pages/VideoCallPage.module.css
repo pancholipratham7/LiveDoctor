@@ -1,0 +1,115 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  margin-top: 60px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+}
+
+.video-call-container {
+  width: 95%;
+  height: 90%;
+  margin: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.partner-video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.my-video {
+  width: 12%;
+  height: 20%;
+  position: absolute;
+  top: 1.48rem;
+  right: 0.58rem;
+  border-radius: 10px;
+  border: 5px solid rgb(255, 255, 255);
+  object-fit: cover;
+}
+
+.video-control-buttons-container {
+  display: flex;
+  width: 20%;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0.58rem;
+  margin: auto;
+}
+
+.control-btn-container {
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.58rem;
+  background-color: rgb(255, 255, 255);
+}
+.control-btn-container:nth-child(3) {
+  color: white;
+  background-color: red;
+}
+
+.call-doctor-btn {
+  background-image: linear-gradient(
+    to right,
+    #4776e6 0%,
+    #8e54e9 51%,
+    #4776e6 100%
+  );
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+  position: absolute;
+  bottom: 10px;
+  border: none;
+}
+
+.call-doctor-btn:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.receiving-call-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 50%;
+}
+
+.receiving-call-container button {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 30%;
+}

@@ -101,7 +101,7 @@ const AppointmentTable = (props) => {
       );
       setModalLoader(false);
       console.log(data);
-      history.push(`/meeting/${callId}`);
+      history.push(`/video-call/${callId}`);
     } catch (err) {
       console.log(err.response.data.message);
     }

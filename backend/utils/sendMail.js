@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer");
-console.log(process.env.GMAIL_PASSWORD);
 
 // creating transporter for mail which will contain the service used to send the mail and sender authentication details
 let mailTransporter = nodemailer.createTransport({

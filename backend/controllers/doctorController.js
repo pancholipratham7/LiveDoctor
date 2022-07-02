@@ -130,7 +130,7 @@ exports.sendCallIdToUser = asyncHandler(async (req, res, next) => {
     subject: "Mail Regarding your Appointment Request",
   };
 
-  mailDetails.text = `For attending a video call with the doctor visit this URL - http://localhost:3000/video-call/${req.body.callId}`;
+  mailDetails.text = `In order to make a video call with the doctor visit this URL - http://localhost:3000/video-call/${req.body.callId}`;
 
   // sending mail
   await sendMail(mailDetails);

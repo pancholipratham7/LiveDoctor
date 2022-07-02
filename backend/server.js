@@ -49,6 +49,25 @@ server.listen(5000, () => {
 
 // on connection
 io.on("connection", function (socket) {
-  console.log("💥", socket.id);
-  socket.emit("me", socket.id);
+  console.log("New socket connected", socket.id);
+  // join room event
+  socket.on("join-room", function (data) {
+    socket.join(data.roomId);
+  });
+
+  // event when the user will be calling
+  socket.on("callUser", function (data) {
+    console.log("Hi");
+    console.log("user to call", data.userToCall);
+    io.sockets.in(data.userToCall).emit("receiving-call", {
+      signalData: data.signalData,
+    });
+  });
+
+  // event emitted when the user will accept the call
+  socket.on("acceptCall", (data) => {
+    io.sockets.in(data.to).emit("callAccepted", {
+      signalData: data.signalData,
+    });
+  });
 });
