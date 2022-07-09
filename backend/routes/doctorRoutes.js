@@ -21,6 +21,11 @@ router
   .route("/:id/appointment")
   .patch(isAuthenticated, isDoctor, doctorController.updateAppointmentStatus);
 
+//mark appoitnment as consulted
+// router
+//   .route("/:id/markAsConsulted")
+//   .patch(isAuthenticated, isDoctor, doctorController.markPatientAsConsulted);
+
 // meeting started mail to patient
 router.route("/send-callId").post(doctorController.sendCallIdToUser);
 

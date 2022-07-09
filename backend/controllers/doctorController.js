@@ -136,3 +136,6 @@ exports.sendCallIdToUser = asyncHandler(async (req, res, next) => {
   await sendMail(mailDetails);
   res.send("Mail sent successfully");
 });
+
+// mark patient as consulted
+const markPatientAsConsulted = asyncHandler(async (req, res, next) => {});

@@ -1,13 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
 import classes from "./VideoCallPage.module.css";
 import MicIcon from "@material-ui/icons/Mic";
+import MutedMicIcon from "@material-ui/icons/MicOff";
 import VideoCamIcon from "@material-ui/icons/Videocam";
+import VideoCamOffIcon from "@material-ui/icons/VideocamOff";
 import EndCallIcon from "@material-ui/icons/CallEnd";
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 import Peer from "simple-peer";
 import { useSelector } from "react-redux";
-import Spinner from "react-bootstrap/Spinner";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import axios from "axios";
 
 const VideoCallPage = () => {
   const [myStream, setMystream] = useState();
@@ -16,6 +20,9 @@ const VideoCallPage = () => {
   const [isCalling, setIsCalling] = useState(false);
   const [callerSignal, setCallerSignal] = useState();
   const [callAccepted, setCallAccepted] = useState();
+  const [isMuted, setIsMuted] = useState(false);
+  const [isCamOff, setIsCamOff] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   // logged in user details
   const { userLoggedInDetails } = useSelector((state) => state.user);
@@ -29,12 +36,15 @@ const VideoCallPage = () => {
   useEffect(() => {
     socket.current = io("http://localhost:5000");
     socket.current.emit("join-room", { roomId: params.callId });
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
+      (stream) => {
         setMystream(stream);
-        myVideo.current.srcObject = stream;
-      });
+        if (myVideo.current) {
+          myVideo.current.srcObject = stream;
+        }
+      },
+      (err) => console.log(err)
+    );
 
     // receiving call event
     socket.current.on("receiving-call", function (data) {
@@ -103,13 +113,74 @@ const VideoCallPage = () => {
     });
   }
 
+  // mic handler
+  function muteMicHandler() {
+    setIsMuted((prevState) => {
+      return !prevState;
+    });
+    myStream
+      .getAudioTracks()
+      .forEach((track) => (track.enabled = !track.enabled));
+  }
+
+  // cam handler
+  function cameraHandler() {
+    setIsCamOff((prevState) => {
+      return !prevState;
+    });
+    myStream
+      .getVideoTracks()
+      .forEach((track) => (track.enabled = !track.enabled));
+  }
+
+  // end call btn handler
+  const endCallBtnHandler = () => {
+    // show the alert
+    setShowModal(true);
+  };
+
+  // modal yes btn handler
+  const modalYesBtnHandler = async () => {
+    // try {
+    //   // update patient as consultec
+    //   // making request to the backend for updating the patient as consulted
+    //   const { data } = await axios.patch(":id/markAsConsulted");
+    //   // redirecting to the home page
+    //   //  redirecting the user to the home page
+    // } catch (err) {
+    //   console.log(err.response.data.message);
+    // }
+  };
+
+  // modal no btn handler
+  const modalNoBtnHandler = () => {
+    // hide the alert
+    setShowModal(false);
+  };
+
   return (
     <React.Fragment>
       <div className={classes["main-container"]}>
         <div className={classes["video-call-container"]}>
+          {showModal && (
+            <div className={classes["modal-container"]}>
+              <Modal.Dialog>
+                <Modal.Body>
+                  <p>Do you really want to end the call ?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button onClick={modalNoBtnHandler} variant="secondary">
+                    No
+                  </Button>
+                  <Button onClick={modalYesBtnHandler} variant="primary">
+                    Yes
+                  </Button>
+                </Modal.Footer>
+              </Modal.Dialog>
+            </div>
+          )}
           <video
             className={classes["partner-video"]}
-            muted
             autoPlay
             playsInline
             ref={partnerVideo}
@@ -141,15 +212,47 @@ const VideoCallPage = () => {
               <p>Wait for the doctor to accept the call....</p>
             </div>
           )}
+          {!isReceivingCall && !partnerStream && userLoggedInDetails.isDoctor && (
+            <div className={classes["loading-container"]}>
+              <img alt="" src="/loading.gif" />
+              <p>
+                Wait on this page till the patient makes a request for the
+                call...
+              </p>
+            </div>
+          )}
           {partnerStream && (
             <div className={classes["video-control-buttons-container"]}>
               <div className={classes["control-btn-container"]}>
-                <MicIcon className={classes["control-btn"]} />
+                {isMuted ? (
+                  <MutedMicIcon
+                    onClick={muteMicHandler}
+                    className={classes["control-btn"]}
+                  />
+                ) : (
+                  <MicIcon
+                    onClick={muteMicHandler}
+                    className={classes["control-btn"]}
+                  />
+                )}
               </div>
               <div className={classes["control-btn-container"]}>
-                <VideoCamIcon className={classes["control-btn"]} />
+                {isCamOff ? (
+                  <VideoCamOffIcon
+                    onClick={cameraHandler}
+                    className={classes["control-btn"]}
+                  />
+                ) : (
+                  <VideoCamIcon
+                    onClick={cameraHandler}
+                    className={classes["control-btn"]}
+                  />
+                )}
               </div>
-              <div className={classes["control-btn-container"]}>
+              <div
+                onClick={endCallBtnHandler}
+                className={classes["control-btn-container"]}
+              >
                 <EndCallIcon className={classes["control-btn"]} />
               </div>
             </div>

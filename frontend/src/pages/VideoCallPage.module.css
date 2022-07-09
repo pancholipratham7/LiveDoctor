@@ -21,6 +21,12 @@
   align-items: center;
 }
 
+.modal-container {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+}
+
 .partner-video {
   height: 100%;
   width: 100%;
@@ -29,7 +35,7 @@
 }
 
 .my-video {
-  width: 12%;
+  width: 10%;
   height: 20%;
   position: absolute;
   top: 1.48rem;

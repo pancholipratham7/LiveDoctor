@@ -38,6 +38,11 @@ const appointmentSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    consulted: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   { timestamps: true }
 );
