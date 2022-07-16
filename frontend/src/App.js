@@ -14,6 +14,7 @@ import VideoCallPage from "./pages/VideoCallPage";
 function App(props) {
   // This will match if the current url of the page is of the type specified in path
   // if it will match then it will return an object otherwise it will return null
+  //
   const match = useRouteMatch({
     path: [
       "/doctor/:id/dashboard",
