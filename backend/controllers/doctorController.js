@@ -2,7 +2,11 @@ const asyncHandler = require("express-async-handler");
 const Doctor = require("../models/doctorModel");
 const Appointment = require("../models/appointmentModel");
 const sendMail = require("../utils/sendMail");
-const { update } = require("../models/doctorModel");
+const {
+  update,
+  findById,
+  findByIdAndUpdate,
+} = require("../models/doctorModel");
 
 // get all doctors
 exports.getAllDoctors = asyncHandler(async (req, res, next) => {
@@ -130,7 +134,7 @@ exports.sendCallIdToUser = asyncHandler(async (req, res, next) => {
     subject: "Mail Regarding your Appointment Request",
   };
 
-  mailDetails.text = `In order to make a video call with the doctor visit this URL - http://localhost:3000/video-call/${req.body.callId}`;
+  mailDetails.text = `In order to make a video call with the doctor visit this URL - http://localhost:3000/${req.body.AppointmentId}/video-call/${req.body.callId}`;
 
   // sending mail
   await sendMail(mailDetails);
@@ -138,4 +142,15 @@ exports.sendCallIdToUser = asyncHandler(async (req, res, next) => {
 });
 
 // mark patient as consulted
-const markPatientAsConsulted = asyncHandler(async (req, res, next) => {});
+exports.markPatientAsConsulted = asyncHandler(async (req, res, next) => {
+  const appointmentId = req.params.appId;
+
+  // marking appointment consulted as true
+  const appointment = await Appointment.findByIdAndUpdate(appointmentId, {
+    consulted: true,
+  });
+
+  //If appointment not found then throw error
+  if (!appointment) throw new Error("No appointment found with this Id");
+  res.status(200).send(true);
+});

@@ -90,6 +90,7 @@ export const updateAppointmentStatus =
 
       // getting token
       const token = getState().user.userLoggedInDetails.token;
+      console.log(token);
 
       // setting up the headers
       const config = {

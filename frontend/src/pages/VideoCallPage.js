@@ -32,10 +32,25 @@ const VideoCallPage = () => {
   const myVideo = useRef();
   const partnerVideo = useRef();
   const socket = useRef();
+  // For storing the peer so that later we can destroy the peer
+  const connectionRef = useRef();
 
   useEffect(() => {
+    // socket Ref initializing with socket connection
     socket.current = io("http://localhost:5000");
+
+    //join room event
     socket.current.emit("join-room", { roomId: params.callId });
+
+    // end call event
+    socket.current.on("end-call", () => {
+      // Destroying the peer
+      connectionRef.current.destroy();
+
+      // redirecting the user to the home page
+      window.location.href = "/";
+    });
+
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
       (stream) => {
         setMystream(stream);
@@ -48,10 +63,11 @@ const VideoCallPage = () => {
 
     // receiving call event
     socket.current.on("receiving-call", function (data) {
+      console.log("both receiving");
       setIsReceivingCall(true);
       setCallerSignal(data.signalData);
     });
-  }, []);
+  }, [params.callId]);
 
   // accept call btn handler
   function acceptCallBtnHandler() {
@@ -74,6 +90,9 @@ const VideoCallPage = () => {
     });
 
     peer.signal(callerSignal);
+
+    // Storing this peer in connection Ref so that we can destroy it during call end
+    connectionRef.current = peer;
   }
 
   // call doctor btn handler
@@ -111,6 +130,9 @@ const VideoCallPage = () => {
       setCallAccepted(true);
       peer.signal(data.signalData);
     });
+
+    // Storing this peer in connection Ref so that we can destroy it during call end
+    connectionRef.current = peer;
   }
 
   // mic handler
@@ -141,19 +163,40 @@ const VideoCallPage = () => {
 
   // modal yes btn handler
   const modalYesBtnHandler = async () => {
-    // try {
-    //   // update patient as consultec
-    //   // making request to the backend for updating the patient as consulted
-    //   const { data } = await axios.patch(":id/markAsConsulted");
-    //   // redirecting to the home page
-    //   //  redirecting the user to the home page
-    // } catch (err) {
-    //   console.log(err.response.data.message);
-    // }
+    try {
+      // setting up the headers
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userLoggedInDetails.token}`,
+        },
+      };
+
+      // making request to the backend for updating the appointment as consulted
+      const { data } = await axios.patch(
+        `http://localhost:5000/api/doctors/${params.appId}/markAsConsulted`,
+        {},
+        config
+      );
+      // if the appointment is marked as consulted
+      if (data) {
+        // destroying this peer
+        connectionRef.current.destroy();
+
+        // emitting a event so that other peer(basically the patient) can be informed that the call has ended from doctor's side
+        socket.current.emit("end-call", { roomId: params.callId });
+
+        // redirecting the user to the home page
+        window.location.href = "/";
+      }
+    } catch (err) {
+      console.log(err.response.data.message);
+    }
   };
 
   // modal no btn handler
   const modalNoBtnHandler = () => {
+    console.log("NO");
     // hide the alert
     setShowModal(false);
   };
@@ -162,23 +205,6 @@ const VideoCallPage = () => {
     <React.Fragment>
       <div className={classes["main-container"]}>
         <div className={classes["video-call-container"]}>
-          {showModal && (
-            <div className={classes["modal-container"]}>
-              <Modal.Dialog>
-                <Modal.Body>
-                  <p>Do you really want to end the call ?</p>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button onClick={modalNoBtnHandler} variant="secondary">
-                    No
-                  </Button>
-                  <Button onClick={modalYesBtnHandler} variant="primary">
-                    Yes
-                  </Button>
-                </Modal.Footer>
-              </Modal.Dialog>
-            </div>
-          )}
           <video
             className={classes["partner-video"]}
             autoPlay
@@ -192,6 +218,23 @@ const VideoCallPage = () => {
             playsInline
             ref={myVideo}
           ></video>
+          {showModal && (
+            <div className={classes["modal-container"]}>
+              <Modal.Dialog>
+                <Modal.Body>
+                  <p>Do you really want to end the call ?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={modalNoBtnHandler}>
+                    No
+                  </Button>
+                  <Button variant="primary" onClick={modalYesBtnHandler}>
+                    Yes
+                  </Button>
+                </Modal.Footer>
+              </Modal.Dialog>
+            </div>
+          )}
           {userLoggedInDetails.isDoctor && isReceivingCall && !callAccepted && (
             <div className={classes["receiving-call-container"]}>
               <p>Patient is calling...</p>

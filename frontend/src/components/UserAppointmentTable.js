@@ -62,7 +62,7 @@ const UserAppointmentTable = (props) => {
     );
   } else if (category === "Booked") {
     filteredAppointments = myAppointments.filter(
-      (appointment) => appointment.status === "Booked"
+      (appointment) => appointment.status === "Booked" && !appointment.consulted
     );
   }
 

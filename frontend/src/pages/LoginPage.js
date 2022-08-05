@@ -24,7 +24,11 @@ const LoginPage = () => {
   if (userLoggedInDetails && userLoggedInDetails.email) {
     // If the user is a doctor then redirecting him to the doctor's dashboard
     if (userLoggedInDetails.isDoctor) {
-      return <Redirect to={`/doctor/${userLoggedInDetails._id}/dashboard`} />;
+      return (
+        <Redirect
+          to={`/doctor/${userLoggedInDetails._id}/dashboard/appointment-requests`}
+        />
+      );
     }
     // If the user is not a doctor then redirecting him to the home page
     else {

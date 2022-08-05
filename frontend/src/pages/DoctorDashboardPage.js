@@ -47,7 +47,9 @@ const DoctorDashboardPage = () => {
           </span>
         </div>
         <ul className={classes["sidebar-options"]}>
-          <li className={classes["sidebar-option"]}>
+          {/* Doctor Dashboard sidebar option */}
+
+          {/* <li className={classes["sidebar-option"]}>
             <NavLink
               exact
               className={classes["sidebar-option-link"]}
@@ -57,7 +59,7 @@ const DoctorDashboardPage = () => {
               <DashBoardIcon className={classes["sidebar-option-icon"]} />
               <span className={classes["sidebar-option-name"]}>Dashboard</span>
             </NavLink>
-          </li>
+          </li> */}
           <li className={classes["sidebar-option"]}>
             <NavLink
               exact
@@ -84,7 +86,10 @@ const DoctorDashboardPage = () => {
               </span>
             </NavLink>
           </li>
-          <li className={classes["sidebar-option"]}>
+
+          {/* Schedule slots doctor dashboard sidebar option */}
+
+          {/* <li className={classes["sidebar-option"]}>
             <NavLink
               exact
               className={classes["sidebar-option-link"]}
@@ -96,7 +101,7 @@ const DoctorDashboardPage = () => {
                 Schedule Slots
               </span>
             </NavLink>
-          </li>
+          </li> */}
           <li className={classes["sidebar-option"]}>
             <NavLink
               onClick={logoutHandler}

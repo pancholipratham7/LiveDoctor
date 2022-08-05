@@ -31,7 +31,9 @@ const Header = () => {
           <div className={classes["account-profile"]}>
             <AccountCircle />
             <DropdownButton id="dropdown-basic-button" title={user.firstName}>
-              <LinkContainer to={`/user/${user._id}/dashboard`}>
+              <LinkContainer
+                to={`/user/${user._id}/dashboard/appointment-requests`}
+              >
                 <Dropdown.Item href="#">My Dashboard</Dropdown.Item>
               </LinkContainer>
               <Dropdown.Item onClick={() => logoutHandler()} href="#">

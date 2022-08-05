@@ -49,25 +49,41 @@ server.listen(5000, () => {
 
 // on connection
 io.on("connection", function (socket) {
-  console.log("New socket connected", socket.id);
   // join room event
   socket.on("join-room", function (data) {
     socket.join(data.roomId);
   });
 
+  // disconnection event
+  socket.on("disconnect", () => {
+    console.log("User disconnecting");
+  });
+
   // event when the user will be calling
   socket.on("callUser", function (data) {
-    console.log("Hi");
-    console.log("user to call", data.userToCall);
-    io.sockets.in(data.userToCall).emit("receiving-call", {
+    socket.broadcast.to(data.userToCall).emit("receiving-call", {
       signalData: data.signalData,
     });
+
+    // io.sockets.in(data.userToCall).emit("receiving-call", {
+    //   signalData: data.signalData,
+    // });
   });
 
   // event emitted when the user will accept the call
   socket.on("acceptCall", (data) => {
-    io.sockets.in(data.to).emit("callAccepted", {
+    socket.broadcast.to(data.to).emit("callAccepted", {
       signalData: data.signalData,
     });
+
+    // io.sockets.in(data.to).emit("callAccepted", {
+    //   signalData: data.signalData,
+    // });
+  });
+
+  // end call event
+  socket.on("end-call", (data) => {
+    // sending end call event to the patient
+    socket.broadcast.to(data.roomId).emit("end-call");
   });
 });

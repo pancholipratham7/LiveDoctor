@@ -19,7 +19,7 @@ function App(props) {
     path: [
       "/doctor/:id/dashboard",
       "/user/:id/dashboard",
-      "/video-call/:callId",
+      "/:appId/video-call/:callId",
     ],
     strict: true,
     sensitive: true,
@@ -29,7 +29,7 @@ function App(props) {
     <div className={classes["app-container"]}>
       {!match && <Header />}
       <Switch>
-        <Route path="/video-call/:callId">
+        <Route path="/:appId/video-call/:callId">
           <VideoCallPage />
         </Route>
         <Route path="/user/:id/dashboard">

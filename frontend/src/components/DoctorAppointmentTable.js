@@ -53,7 +53,7 @@ const AppointmentTable = (props) => {
     );
   } else if (category === "Booked") {
     filteredAppointments = myAppointments.filter(
-      (appointment) => appointment.status === "Booked"
+      (appointment) => appointment.status === "Booked" && !appointment.consulted
     );
   }
 
@@ -101,7 +101,7 @@ const AppointmentTable = (props) => {
       );
       setModalLoader(false);
       console.log(data);
-      history.push(`/video-call/${callId}`);
+      history.push(`/${AppointmentId}/video-call/${callId}`);
     } catch (err) {
       console.log(err.response.data.message);
     }

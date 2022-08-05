@@ -46,7 +46,9 @@ const UserDashboardPage = () => {
           </span>
         </div>
         <ul className={classes["sidebar-options"]}>
-          <li className={classes["sidebar-option"]}>
+          {/* Doctor dashboard sidebar option */}
+
+          {/* <li className={classes["sidebar-option"]}>
             <NavLink
               exact
               className={classes["sidebar-option-link"]}
@@ -56,7 +58,7 @@ const UserDashboardPage = () => {
               <DashBoardIcon className={classes["sidebar-option-icon"]} />
               <span className={classes["sidebar-option-name"]}>Dashboard</span>
             </NavLink>
-          </li>
+          </li> */}
           <li className={classes["sidebar-option"]}>
             <NavLink
               exact
